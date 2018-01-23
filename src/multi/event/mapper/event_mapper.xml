@@ -141,7 +141,7 @@
 	
 		
 	<select id="search_event" parameterType="multi.event.vo.Event_searchVO" resultType="main.vo.EventVO">
-		SELECT * FROM EventT WHERE 0=0
+		SELECT * FROM eventt WHERE 0=0
 		
 		<if test="eve_option == 1">
 			AND eve_title like '%${eve_key}%'

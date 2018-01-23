@@ -336,7 +336,7 @@
 	<!--@@@@@@@검색@@@@@@@ -->
 	<select id="comm_qna_search" parameterType="multi.community.qna.vo.Community_qna_searchVO" resultType="multi.community.qna.vo.Community_qnaVO">
 
-		SELECT * FROM Community_qnaT WHERE 0 = 0
+		SELECT * FROM community_qnat WHERE 0 = 0
 		<if test="comm_search_option ==1">
 			AND com_qna_title like '%${comm_search_content}%'
 		</if>

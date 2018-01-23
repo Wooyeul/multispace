@@ -78,10 +78,7 @@
 	         parent.location.href="home_moveLoginPage.do";
 	      });
 	  });
-	  function board_list(page){
-		  $("#cur_page").attr("value",page);
-		  $("#paging_frm").submit();
-	  }
+	 
 
 
 	</script>
@@ -123,40 +120,7 @@
 			</tr>
 		</jl:forEach>
 	</table>
-	
-	<!-- 페이징 -->
-	<div align="center">
-		<ul class="pagination pagination-sm">
-			<!-- 이전 페이지로 이동 : 10페이지 이전으로(블록 이동) -->
-			<jl:if test="${board_pz.hasPrevPagination }">
-				<li><a class="page" href="javascript:board_list('${board_pz.paginationStart-1}')">&lt;</a></li>
-			</jl:if>
-			<!-- 이전 페이지로 이동 : 한페이지 이전으로 -->
-			<jl:if test="${board_pz.hasPrevPage }">
-				<li><a class="page" href="javascript:board_list('${board_pz.curPagination-1 }')">&lt;</a></li>
-			</jl:if>
-				<!-- 페이지 번호 만들기 -->
-				<jl:forEach begin="${board_pz.paginationStart }" end="${board_pz.paginationEnd }" step="1" varStatus="vs">
-					<jl:choose>
-						<jl:when test="${vs.index!=board_pz.curPagination }">
-							<li><a class="page" href="javascript:board_list('${vs.index }')">${vs.index }</a></li>
-						</jl:when>
-						<jl:otherwise>
-							<li class="active"><a class="page" href="javascript:board_list('${vs.index }')">${vs.index }</a></li>
-						</jl:otherwise>
-					</jl:choose>
-				</jl:forEach>
-			<!-- 다음 페이지로 이동 : 한페이지 이동 -->
-			<jl:if test="${board_pz.hasNextPage }">
-				<li><a class="page" href="javascript:board_list('${board_pz.curPagination+1}')">&gt;</a></li>
-			</jl:if>
-			<!-- 다음 페이지로 이동 : 10페이지 이후로(블록 이동) -->
-			<jl:if test="${board_pz.hasNextPagination }">
-				<li><a class="page" href="javascript:board_list('${board_pz.paginationEnd+1 }')">&gt;&gt;</a></li>
-			</jl:if>
-		</ul>
-	</div>
-	<!-- 페이징 -->		
+		
 	<div class="wrapper comm_qna_list_wrapper">
 			<form action="community_qna_mytext.do" id="paging_frm" >
 				<div class="selecdiv0">

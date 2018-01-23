@@ -62,21 +62,15 @@ public class CtrlBoard {
 	   }
 	 
 	 @RequestMapping("/community_board_mytext.do")
-	   public ModelAndView community_board_mytext(@CookieValue("user_id") String user_id,
-			   	@ModelAttribute Community_board_searchVO pvo, @RequestParam("cur_board_page") String cur_board_page) throws Exception{
+	   public ModelAndView community_board_mytext(@CookieValue("user_id") String user_id) throws Exception{
 		 ModelAndView mnv = new ModelAndView("community_board_mytext");
-		 pvo.setStart(null);
-		 List<Community_boardVO> board_list = community_board_searchDAO.comm_board_search(pvo);
+		
 		 List<Community_boardVO> mrl = community_boardmytextDAO.findAll(user_id);
-		 PaginationDTO board_pz = new PaginationDTO().init(cur_board_page, mrl.size());
-	      pvo.setStart(board_pz.getSkip());
-	      board_list = community_board_searchDAO.comm_board_search(pvo);
+		
 	      mrl = community_boardmytextDAO.findAll(user_id);
-	      
 	      mnv.addObject("user_id", user_id);
-	      mnv.addObject("board_list",board_list);
 	      mnv.addObject("mrl", mrl);
-	      mnv.addObject("board_pz",board_pz);
+	   
 	      return mnv;
 	 }
 	 

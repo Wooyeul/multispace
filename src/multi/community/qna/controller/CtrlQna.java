@@ -190,22 +190,14 @@ public class CtrlQna {
 
 	// QNA 내가쓴글보기
 	 @RequestMapping("/community_qna_mytext.do")
-	   public ModelAndView community_board_mytext(@CookieValue("user_id") String user_id,
-			   @ModelAttribute Community_qna_searchVO pvo, @RequestParam("cur_page") String cur_page) throws Exception{
+	   public ModelAndView community_board_mytext(@CookieValue("user_id") String user_id) throws Exception{
 		 ModelAndView mnv = new ModelAndView("community_qna_mytext");
-		 pvo.setStart(null);
-		 List<Community_qnaVO> qna_list = community_qna_searchDAO.comm_qna_search(pvo);
+		
 		 List<Community_qnaVO> mrl = community_qna_mytextDAO.findAll(user_id);
-		 PaginationDTO board_pz = new PaginationDTO().init(cur_page, mrl.size());
-		 pvo.setStart(board_pz.getSkip());
-		 qna_list=community_qna_searchDAO.comm_qna_search(pvo);
+		
 		 mrl=community_qna_mytextDAO.findAll(user_id);
-		 
 	     mnv.addObject("user_id", user_id);
-	     mnv.addObject("qna_list", qna_list);
 	     mnv.addObject("mrl", mrl);
-	     mnv.addObject("board_pz", board_pz);
-	     System.out.println(user_id);
 	     return mnv;
 	 }
 	 // QNA 글 찾기
