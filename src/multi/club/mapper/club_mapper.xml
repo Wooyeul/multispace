@@ -45,9 +45,9 @@
 				   c.club_thumb_img, c.max_member, c.create_time, c.l_category_no, c.c_category_no,
 				   l.l_category_name, cc.c_category_name, 
 				   (
-				   	SELECT COUNT(*) FROM User_ClubT WHERE club_no=c.club_no
+				   	SELECT COUNT(*) FROM User_clubt WHERE club_no=c.club_no
 				   ) AS user_count
-			  FROM ClubT AS c, L_CategoryT AS l, C_CategoryT AS cc
+			  FROM clubt AS c, L_CategoryT AS l, C_CategoryT AS cc
 			 WHERE 0 = 0
 			   AND c.l_category_no = l.l_category_no
 			   AND c.c_category_no = cc.c_category_no
@@ -170,7 +170,7 @@
 	<!-- 모임 회원 조회 끝 -->
 	<!-- 모임 회원 판단 시 사용 시작-->
 	<select id="club_find_user_byId" parameterType="main.vo.User_clubVO" resultType="main.vo.User_clubVO" statementType="CALLABLE">
-		SELECT * FROM User_clubT WHERE club_no = #{club_no} AND user_id = #{user_id}
+		SELECT * FROM User_clubt WHERE club_no = #{club_no} AND user_id = #{user_id}
 	</select>
 	<!-- 모임 회원 판단 시 사용 끝 -->
 	

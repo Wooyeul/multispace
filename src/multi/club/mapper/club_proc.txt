@@ -7,7 +7,7 @@ DELIMITER $$
 CREATE PROCEDURE p_club_findAll()
 BEGIN
 	SELECT *
-	FROM ClubT
+	FROM clubt
 	ORDER BY club_no DESC;
 END$$
 DELIMITER ;
@@ -49,17 +49,17 @@ CREATE PROCEDURE p_club_search(
 )
 BEGIN
 	IF v_l_category_no=0 && v_c_category_no=0 && v_searchOption=0 THEN
-		SELECT * FROM ClubT;
+		SELECT * FROM clubt;
 	ELSEIF v_l_category_no!=0 && v_c_category_no!=0 THEN
-		SELECT * FROM ClubT WHERE l_category_no=v_l_category_no	AND c_category_no=v_c_category_no;
+		SELECT * FROM clubt WHERE l_category_no=v_l_category_no	AND c_category_no=v_c_category_no;
 	ELSEIF v_l_category_no!=0 && v_searchOption!=0 THEN
 		IF v_searchOption=1 THEN
-			SELECT * FROM ClubT WHERE l_category_no=v_l_category_no	AND club_title LIKE "%v_searchContent%";
+			SELECT * FROM clubt WHERE l_category_no=v_l_category_no	AND club_title LIKE "%v_searchContent%";
 		ELSEIF v_searchOption=2 THEN
-			SELECT * FROM ClubT WHERE l_category_no=v_l_category_no	AND club_title LIKE "%v_searchContent%"
+			SELECT * FROM clubt WHERE l_category_no=v_l_category_no	AND club_title LIKE "%v_searchContent%"
 			OR club_content LIKE"%v_searchContent%";
 		ELSEIF v_searchOption=3 THEN
-			SELECT * FROM ClubT WHERE l_category_no=v_l_category_no	AND user_id LIKE "%user_id%";
+			SELECT * FROM clubt WHERE l_category_no=v_l_category_no	AND user_id LIKE "%user_id%";
 		END IF;
 	END IF;
 
@@ -78,7 +78,7 @@ BEGIN
 	SELECT *
  	  FROM SpaceT
   	 WHERE l_category_no = ( SELECT l_category_no
-	    					   FROM ClubT
+	    					   FROM clubt
 	   					      WHERE club_no=v_club_no)
 	 ORDER BY space_no DESC
  	 LIMIT 5;
@@ -102,9 +102,9 @@ CREATE PROCEDURE p_club_addClub(
 )
 BEGIN
 	DECLARE p_club_no INT;
-	INSERT INTO ClubT VALUES(default, v_user_id, v_l_category_no, v_c_category_no, v_club_name, v_club_title, v_club_content, v_club_thumb_img, v_max_member, now());
-	SELECT MAX(club_no) INTO p_club_no FROM ClubT;
-	INSERT INTO User_ClubT VALUES(p_club_no, v_user_id);
+	INSERT INTO clubt VALUES(default, v_user_id, v_l_category_no, v_c_category_no, v_club_name, v_club_title, v_club_content, v_club_thumb_img, v_max_member, now());
+	SELECT MAX(club_no) INTO p_club_no FROM clubt;
+	INSERT INTO User_clubt VALUES(p_club_no, v_user_id);
 END$$
 DELIMITER ;
 ######################p_club_addClub 프로시저 끝######################
@@ -126,7 +126,7 @@ CREATE PROCEDURE p_club_mod_club(
 	IN v_create_time DATETIME
 )
 BEGIN
-	UPDATE ClubT SET club_name= v_club_name, club_title = v_club_title, 
+	UPDATE clubt SET club_name= v_club_name, club_title = v_club_title, 
 					club_content= v_club_content, club_thumb_img= v_club_thumb_img, max_member = v_max_member, create_time = v_create_time, 
 					l_category_no = v_l_category_no, c_category_no = v_c_category_no 
 				WHERE club_no = v_club_no;
@@ -144,11 +144,11 @@ CREATE PROCEDURE p_club_find_detail(
 )
 BEGIN
 	DECLARE v_count INT;
-	SELECT COUNT(*) INTO v_count FROM User_ClubT WHERE club_no=v_club_no;
+	SELECT COUNT(*) INTO v_count FROM User_clubt WHERE club_no=v_club_no;
 	SET v_user_count = v_count;
 	
 	SELECT *
-	FROM ClubT
+	FROM clubt
 	WHERE club_no = v_club_no;
 END$$
 DELIMITER ;
@@ -204,7 +204,7 @@ CREATE PROCEDURE p_club_find_master(
 )
 BEGIN
 	SELECT user_name
-	  FROM UserT AS A, ClubT AS B
+	  FROM UserT AS A, clubt AS B
  	 WHERE A.user_id = B.user_id
 	   AND B.club_no = v_club_no;
 END$$
@@ -220,9 +220,9 @@ CREATE PROCEDURE p_club_find_user(
 )
 BEGIN
 	SELECT *
-      FROM UserT, User_ClubT
-	 WHERE User_ClubT.club_no=v_club_no
-	   AND UserT.user_id = User_ClubT.user_id
+      FROM UserT, User_clubt
+	 WHERE User_clubt.club_no=v_club_no
+	   AND UserT.user_id = User_clubt.user_id
 	 ORDER BY user_name;
 END$$
 DELIMITER ;
@@ -290,8 +290,8 @@ BEGIN
 
 	START TRANSACTION;
 	
-	SELECT COUNT(*) INTO user_count FROM User_Clubt WHERE club_no = v_club_no;
-	SELECT max_member,user_id INTO max_count,c_user_id	FROM ClubT WHERE club_no = v_club_no;
+	SELECT COUNT(*) INTO user_count FROM User_clubt WHERE club_no = v_club_no;
+	SELECT max_member,user_id INTO max_count,c_user_id	FROM clubt WHERE club_no = v_club_no;
 	
 	IF user_count<max_count-1 THEN
 		INSERT INTO MessageT VALUES(default,c_user_id,v_user_id,v_apply_content,now(),0);	
@@ -299,7 +299,7 @@ BEGIN
 		  FROM Club_applyT
 		 WHERE user_id=v_user_id
 	  	   AND club_no=v_club_no;
-		INSERT INTO User_ClubT VALUES(v_club_no,v_user_id);
+		INSERT INTO User_clubt VALUES(v_club_no,v_user_id);
 		SET flag = 10000;
 	ELSE
 		SET flag = 10001;
@@ -389,7 +389,7 @@ CREATE PROCEDURE p_club_del_user(
 )
 BEGIN
 	DELETE
-	  FROM User_clubT
+	  FROM User_clubt
 	 WHERE club_no=v_club_no
 	   AND user_id=v_user_id;
 END$$
@@ -413,10 +413,10 @@ BEGIN
 	START TRANSACTION;
 
 	DELETE
-	  FROM User_clubT
+	  FROM User_clubt
 	 WHERE club_no=v_club_no;
 	DELETE
-	  FROM ClubT
+	  FROM clubt
 	 WHERE club_no=v_club_no;
 	 
 	 COMMIT;
@@ -449,7 +449,7 @@ BEGIN
 	INSERT INTO MessageT VALUES(default,c_user_id,v_user_id,v_content,now(),0);	
 	
 	DELETE
-	  FROM User_clubT
+	  FROM User_clubt
 	 WHERE club_no=v_club_no
 	   AND user_id=v_user_id;
 	 
@@ -467,13 +467,13 @@ BEGIN
 	DROP TEMPORARY TABLE IF EXISTS temp;
     CREATE TEMPORARY TABLE IF NOT EXISTS temp
 		SELECT count(*) as count,c.club_no
-		  FROM ClubT AS c, User_clubT AS u
+		  FROM clubt AS c, User_clubt AS u
 		 WHERE c.club_no=u.club_no
 		 group by c.club_no
 		 order by count desc limit 0,3;
    
    SELECT c.club_no, c.club_name, c.club_title, t.count, c.club_thumb_img
-     FROM ClubT AS c, temp AS t 
+     FROM clubt AS c, temp AS t 
     WHERE c.club_no=t.club_no;		
 END$$
 DELIMITER ;
