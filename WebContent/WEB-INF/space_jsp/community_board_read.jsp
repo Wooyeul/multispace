@@ -208,9 +208,7 @@ $(document).ready(function() {
 			ajaxGet("community_board_recom.do" + dc	+ "&user_id="+user_id+"&com_board_no=${vo.com_board_no}", 
 					function(rt) {
 				if (rt != -1) {
-					e("recomCount").innerHTML = 
-						"<button type="+"'button'"+"id='btnrecom'"+ "class='"+"btn btn-default btn-circle'"+"><i class='"+"fa fa-heart'"+"></i></button>&emsp;"+rt;
-					
+					$("#recom_count").text(rt);
 				} 
 				else {
 					$("#modalrecom").modal("show");
@@ -337,7 +335,7 @@ $(document).ready(function() {
 							<td>
 							<div id="recomCount">
 								<button user_id="${user_id}" type="button" id="btnrecom" class="btn btn-default btn-circle" ><i class="fa fa-heart"></i>
-								</button>&emsp;${vo.recom_count}				
+								</button>&emsp;<span id="recom_count">${vo.recom_count}</span>				
 							</div>
 							</td>
 						</tr>
