@@ -65,7 +65,7 @@
 	
 
    <select id="mypage_search_QnA" parameterType="multi.mypage.vo.Mypage_searchVO" resultType="main.vo.Space_qnaVO">
-   		SELECT * FROM space_qnaT where user_id = #{user_id} AND 0=0
+   		SELECT * FROM space_qnat where user_id = #{user_id} AND 0=0
    		<if test="start_no !=null">
    			ORDER BY user_id ASC LIMIT #{start_no},10
    		</if>
