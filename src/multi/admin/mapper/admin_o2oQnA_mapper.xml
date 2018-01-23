@@ -141,7 +141,7 @@
 	<select id="admin_search_All" parameterType="multi.admin.vo.Admin_searchVO"
 		resultType="main.vo.O2OQnAVO">
 
-	SELECT * FROM O2Oqnat WHERE re_o2o_content = ''
+	SELECT * FROM o2oqnat WHERE re_o2o_content = ''
 	<if test="search_option == 1">
 	AND o2o_title like '%${search_content}%'
 	</if>
@@ -173,7 +173,7 @@
 	<select id="admin_search_All2" parameterType="multi.admin.vo.Admin_searchVO"
 		resultType="main.vo.O2OQnAVO">
 
-	SELECT * FROM O2Oqnat WHERE re_o2o_content != ''
+	SELECT * FROM o2oqnat WHERE re_o2o_content != ''
 	<if test="search_option == 1">
 	AND o2o_title like '%${search_content}%'
 	</if>

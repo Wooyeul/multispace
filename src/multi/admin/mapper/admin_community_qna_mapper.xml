@@ -318,7 +318,7 @@
 	<select id="admin_search_All" parameterType="multi.admin.vo.Admin_community_searchVO"
 		resultType="main.vo.Community_qnaVO">
 	
-		SELECT * FROM Community_qnaT WHERE 0 = 0
+		SELECT * FROM community_qnat WHERE 0 = 0
 		<if test="search_option == 1">
 		AND com_qna_title like '%${search_content}%'
 		</if>
