@@ -76,14 +76,14 @@
 	</insert>
    
    <select id="mypage_search_receive_msg" parameterType="multi.mypage.vo.Mypage_searchVO" resultType="main.vo.MessageVO">
-   		SELECT * from MessageT where receive_user_id = #{user_id} AND 0=0
+   		SELECT * from messaget where receive_user_id = #{user_id} AND 0=0
    		<if test="start_no !=null">
    			ORDER BY receive_user_id ASC LIMIT #{start_no},10
    		</if>
    </select>
    
    <select id="mypage_search_send_msg" parameterType="multi.mypage.vo.Mypage_searchVO" resultType="main.vo.MessageVO">
-   		SELECT * from MessageT where send_user_id = #{user_id} AND 0=0
+   		SELECT * from messaget where send_user_id = #{user_id} AND 0=0
    		<if test="start_no !=null">
    			ORDER BY send_user_id ASC LIMIT #{start_no},10
    		</if>
