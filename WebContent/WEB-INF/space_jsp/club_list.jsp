@@ -63,7 +63,7 @@
 		</ul>
 	</div>
 	<div align="right">
-		<button id="btn" class="btn_square" type="button">모임등록</button>
+		<button id="btn" class="btn_square" type="button" style="display: none">모임등록</button>
 	</div>
 	<!-- 자바스크립트 -->
 	<script type="text/javascript">
@@ -71,6 +71,9 @@
 			$("#btn").on("click",function(){
 				parent.location.href="club_add_page.do";
 			});
+			if('${user_id}'!=''){
+				$("#btn").attr("display","inline;");
+			}
 		});
 		function list(page){
 			parent.setCurpage(page);

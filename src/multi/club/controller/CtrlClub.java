@@ -74,6 +74,7 @@ public class CtrlClub {
 		map.put("vo", vo); // vo ÀúÀå
 		map.put("pz", pz);
 		map.put("svo", svo);
+		map.put("user_id", user_id);
 		mnv.addObject("map", map);
 		
 		return mnv;
