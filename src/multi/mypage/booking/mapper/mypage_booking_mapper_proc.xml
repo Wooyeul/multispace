@@ -51,7 +51,7 @@
 	
 	
 	<select id="mypage_search_booking" parameterType="multi.mypage.vo.Mypage_searchVO" resultMap="RM_mybookinginfo">
-		SELECT * FROM bookingT WHERE user_id = #{user_id}
+		SELECT * FROM bookingt WHERE user_id = #{user_id}
 		<if test="start_no != null">
 			ORDER BY user_id ASC LIMIT #{start_no},10
 		</if>
