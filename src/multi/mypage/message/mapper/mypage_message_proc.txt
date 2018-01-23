@@ -5,7 +5,7 @@ CREATE PROCEDURE p_mypage_message_find_receive_message(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	SELECT * from MessageT where receive_user_id = v_user_id;
+	SELECT * from messaget where receive_user_id = v_user_id;
 END$$
 DELIMITER ;
 DELIMITER ;
@@ -19,7 +19,7 @@ CREATE PROCEDURE p_mypage_message_read_receive_message(
 	IN v_msg_no INT(11)
 )
 BEGIN
-	SELECT * from MessageT where msg_no = v_msg_no;
+	SELECT * from messaget where msg_no = v_msg_no;
 END$$
 DELIMITER ;
 DELIMITER ;
@@ -33,7 +33,7 @@ CREATE PROCEDURE p_mypage_message_find_send_message(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	SELECT * from MessageT where send_user_id = v_user_id;
+	SELECT * from messaget where send_user_id = v_user_id;
 END$$
 DELIMITER ;
 DELIMITER ;
@@ -48,7 +48,7 @@ CREATE PROCEDURE p_mypage_message_read_send_message(
 	IN v_msg_no INT(11)
 )
 BEGIN
-	SELECT * from MessageT where msg_no = v_msg_no;
+	SELECT * from messaget where msg_no = v_msg_no;
 END$$
 DELIMITER ;
 DELIMITER ;
@@ -94,7 +94,7 @@ CREATE PROCEDURE p_mypage_send_message(
 	IN v_msg_content TEXT
 )
 BEGIN
-	INSERT into MessageT values (default,v_send_user_id,v_receive_user_id,v_msg_content,now(),0);
+	INSERT into messaget values (default,v_send_user_id,v_receive_user_id,v_msg_content,now(),0);
 END$$
 DELIMITER ;
 DELIMITER ;
@@ -109,7 +109,7 @@ CREATE PROCEDURE p_mypage_message_del_message(
 	IN v_msg_no INT(11)
 )
 BEGIN
-   		DELETE FROM messageT where msg_no = v_msg_no;
+   		DELETE FROM messaget where msg_no = v_msg_no;
 END$$
 DELIMITER ;
 DELIMITER ;

@@ -5,7 +5,7 @@ CREATE PROCEDURE p_mypage_qna_find_user_info(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	SELECT * from userT where user_id = v_user_id;
+	SELECT * from usert where user_id = v_user_id;
 END$$
 DELIMITER ;
 DELIMITER ;
@@ -19,7 +19,7 @@ CREATE PROCEDURE p_mypage_qna_qna_info(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	SELECT * from space_qnaT where user_id = v_user_id;
+	SELECT * from space_qnat where user_id = v_user_id;
 END$$
 DELIMITER ;
 DELIMITER ;
@@ -33,7 +33,7 @@ CREATE PROCEDURE p_mypage_qna_qna_reple_info(
 	IN v_space_qna_no INT(11)
 )
 BEGIN
-	SELECT * from space_qna_repleT where space_qna_no = v_space_qna_no;
+	SELECT * from space_qna_replet where space_qna_no = v_space_qna_no;
 END$$
 DELIMITER ;
 DELIMITER ;
@@ -47,7 +47,7 @@ CREATE PROCEDURE p_mypage_qna_qna_info_byqnano(
 	IN v_space_qna_no INT(11)
 )
 BEGIN
-	select * from space_qnaT where space_qna_no = v_space_qna_no;
+	select * from space_qnat where space_qna_no = v_space_qna_no;
 END$$
 DELIMITER ;
 DELIMITER ;

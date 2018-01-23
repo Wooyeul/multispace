@@ -5,7 +5,7 @@ CREATE PROCEDURE p_mypage_booking_info(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	SELECT * from bookingT where user_id = v_user_id;
+	SELECT * from bookingt where user_id = v_user_id;
 END$$
 DELIMITER ;
 
@@ -17,6 +17,6 @@ CREATE PROCEDURE p_mypage_booking_find_user_info(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	SELECT * from userT where user_id = v_user_id;
+	SELECT * from usert where user_id = v_user_id;
 END$$
 DELIMITER ;

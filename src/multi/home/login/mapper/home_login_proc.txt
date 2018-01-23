@@ -6,7 +6,7 @@ CREATE PROCEDURE p_home_login(
 	IN v_user_passwd VARCHAR(20)
 )
 BEGIN
-	SELECT * from userT where user_id = v_user_id AND passwd = v_user_passwd;
+	SELECT * from usert where user_id = v_user_id AND passwd = v_user_passwd;
 END$$
 DELIMITER ;
 
@@ -19,7 +19,7 @@ CREATE PROCEDURE p_home_login_find_user_info(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	SELECT * from userT where user_id = v_user_id;
+	SELECT * from usert where user_id = v_user_id;
 END$$
 DELIMITER ;
 	
@@ -35,7 +35,7 @@ CREATE PROCEDURE p_home_login_find_user_id(
 	
 )
 BEGIN
-	SELECT * from userT where user_name = v_user_name AND ssn1 = v_ssn1 AND ssn2 = v_ssn2;
+	SELECT * from usert where user_name = v_user_name AND ssn1 = v_ssn1 AND ssn2 = v_ssn2;
 END$$
 DELIMITER ;
 
@@ -51,7 +51,7 @@ CREATE PROCEDURE p_home_login_find_passwd(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	SELECT * from userT where user_name = v_user_name AND ssn1 = v_ssn1 AND ssn2 = v_ssn2 AND user_id = v_user_id;
+	SELECT * from usert where user_name = v_user_name AND ssn1 = v_ssn1 AND ssn2 = v_ssn2 AND user_id = v_user_id;
 END$$
 DELIMITER ;
 
