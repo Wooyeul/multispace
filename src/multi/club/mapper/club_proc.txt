@@ -20,7 +20,7 @@ DELIMITER $$
 CREATE PROCEDURE p_club_find_lcategory()
 BEGIN
 	SELECT *
-	FROM L_categoryt;
+	FROM l_categoryt;
 END$$
 DELIMITER ;
 ######################p_club_find_lcategory 프로시저 끝######################
@@ -32,7 +32,7 @@ DELIMITER $$
 CREATE PROCEDURE p_club_find_ccategory()
 BEGIN
 	SELECT *
-	FROM C_categoryt;
+	FROM c_categoryt;
 END$$
 DELIMITER ;
 ######################p_club_find_ccategory 프로시저 끝######################
@@ -76,7 +76,7 @@ CREATE PROCEDURE p_club_find_detail_space(
 )
 BEGIN
 	SELECT *
- 	  FROM SpaceT
+ 	  FROM spacet
   	 WHERE l_category_no = ( SELECT l_category_no
 	    					   FROM clubt
 	   					      WHERE club_no=v_club_no)
@@ -104,7 +104,7 @@ BEGIN
 	DECLARE p_club_no INT;
 	INSERT INTO clubt VALUES(default, v_user_id, v_l_category_no, v_c_category_no, v_club_name, v_club_title, v_club_content, v_club_thumb_img, v_max_member, now());
 	SELECT MAX(club_no) INTO p_club_no FROM clubt;
-	INSERT INTO User_clubt VALUES(p_club_no, v_user_id);
+	INSERT INTO user_clubt VALUES(p_club_no, v_user_id);
 END$$
 DELIMITER ;
 ######################p_club_addClub 프로시저 끝######################
@@ -144,7 +144,7 @@ CREATE PROCEDURE p_club_find_detail(
 )
 BEGIN
 	DECLARE v_count INT;
-	SELECT COUNT(*) INTO v_count FROM User_clubt WHERE club_no=v_club_no;
+	SELECT COUNT(*) INTO v_count FROM user_clubt WHERE club_no=v_club_no;
 	SET v_user_count = v_count;
 	
 	SELECT *
@@ -167,14 +167,6 @@ BEGIN
 	DECLARE user_chk INT;
 	DECLARE apply_chk INT;
 	
-	DECLARE exit handler FOR SQLEXCEPTION
-	BEGIN
-		ROLLBACK;
-		SIGNAL SQLSTATE '45000';
-	END;
-
-	START TRANSACTION;
-	
 	SELECT COUNT(*) INTO user_chk FROM user_clubt WHERE club_no = v_club_no AND user_id = v_user_id;
 	SELECT COUNT(*) INTO apply_chk FROM club_applyt WHERE club_no = v_club_no AND user_id = v_user_id;
 	
@@ -187,7 +179,7 @@ BEGIN
 	END IF;
 	
 	SELECT *
-	FROM Club_applyT
+	FROM club_applyt
 	WHERE club_no = v_club_no
 	  AND user_id = v_user_id;
 	COMMIT;
@@ -204,7 +196,7 @@ CREATE PROCEDURE p_club_find_master(
 )
 BEGIN
 	SELECT user_name
-	  FROM UserT AS A, clubt AS B
+	  FROM usert AS A, clubt AS B
  	 WHERE A.user_id = B.user_id
 	   AND B.club_no = v_club_no;
 END$$
@@ -220,9 +212,9 @@ CREATE PROCEDURE p_club_find_user(
 )
 BEGIN
 	SELECT *
-      FROM UserT, User_clubt
-	 WHERE User_clubt.club_no=v_club_no
-	   AND UserT.user_id = User_clubt.user_id
+      FROM usert, user_clubt
+	 WHERE user_clubt.club_no=v_club_no
+	   AND usert.user_id = user_clubt.user_id
 	 ORDER BY user_name;
 END$$
 DELIMITER ;
@@ -237,7 +229,7 @@ CREATE PROCEDURE p_club_find_apply(
 )
 BEGIN
 	SELECT A.apply_no, A.user_id, A.club_no, A.apply_content, B.user_name
-      FROM Club_applyT AS A, UserT B
+      FROM club_applyt AS A, usert B
 	 WHERE A.club_no = v_club_no
 	   AND A.user_id = B.user_id
 	 ORDER BY A.club_no;
@@ -257,9 +249,9 @@ CREATE PROCEDURE p_club_add_apply(
 )
 BEGIN
 	DECLARE count INT;
-	SELECT COUNT(*) INTO count FROM Club_applyT WHERE user_id=v_user_id AND club_no=v_club_no;
+	SELECT COUNT(*) INTO count FROM club_applyt WHERE user_id=v_user_id AND club_no=v_club_no;
 	IF count=0 THEN
-		INSERT INTO Club_applyT VALUES(default,v_user_id,v_club_no,v_club_content);
+		INSERT INTO club_applyt VALUES(default,v_user_id,v_club_no,v_club_content);
 		SET v_flag = 10000;
 	ELSE
 		SET v_flag = 10001;
@@ -282,29 +274,22 @@ BEGIN
 	DECLARE user_count INT;
 	DECLARE max_count INT;
 	DECLARE c_user_id VARCHAR(20);
-	DECLARE exit handler FOR SQLEXCEPTION
-	BEGIN
-		ROLLBACK;
-		SIGNAL SQLSTATE '45000';
-	END;
 
-	START TRANSACTION;
-	
-	SELECT COUNT(*) INTO user_count FROM User_clubt WHERE club_no = v_club_no;
+	SELECT COUNT(*) INTO user_count FROM user_clubt WHERE club_no = v_club_no;
 	SELECT max_member,user_id INTO max_count,c_user_id	FROM clubt WHERE club_no = v_club_no;
 	
 	IF user_count<max_count-1 THEN
-		INSERT INTO MessageT VALUES(default,c_user_id,v_user_id,v_apply_content,now(),0);	
+		INSERT INTO messaget VALUES(default,c_user_id,v_user_id,v_apply_content,now(),0);	
 		DELETE
-		  FROM Club_applyT
+		  FROM club_applyt
 		 WHERE user_id=v_user_id
 	  	   AND club_no=v_club_no;
-		INSERT INTO User_clubt VALUES(v_club_no,v_user_id);
+		INSERT INTO user_clubt VALUES(v_club_no,v_user_id);
 		SET flag = 10000;
 	ELSE
 		SET flag = 10001;
 	END IF;
-	COMMIT;
+
 END$$
 DELIMITER ;
 ######################p_club_apply_agree 프로시저 끝######################
@@ -321,18 +306,10 @@ CREATE PROCEDURE p_club_apply_disagree(
 BEGIN
 	DECLARE c_user_id VARCHAR(20);
 	
-	DECLARE exit handler FOR SQLEXCEPTION
-	BEGIN
-		ROLLBACK;
-		SIGNAL SQLSTATE '45000';
-	END;
-
-	START TRANSACTION;
-	
 	SELECT user_id INTO c_user_id FROM clubt WHERE club_no = v_club_no;
-	INSERT INTO MessageT VALUES(default,c_user_id,v_user_id,v_etc,now(),0);	
+	INSERT INTO messaget VALUES(default,c_user_id,v_user_id,v_etc,now(),0);	
 		DELETE
-		  FROM Club_applyT
+		  FROM club_applyt
 		 WHERE user_id=v_user_id
 	   	   AND club_no=v_club_no;
 	COMMIT;
@@ -350,7 +327,7 @@ CREATE PROCEDURE p_club_add_message(
 	IN v_msg_content TEXT
 )
 BEGIN
-	INSERT INTO MessageT VALUES(default,v_send_user_id,v_receive_user_id,v_msg_content,now(),0);
+	INSERT INTO messaget VALUES(default,v_send_user_id,v_receive_user_id,v_msg_content,now(),0);
 END$$
 DELIMITER ;
 ######################p_club_add_message 프로시저 끝######################
@@ -362,7 +339,7 @@ DELIMITER $$
 CREATE PROCEDURE p_club_find_lcategory()
 BEGIN
 	SELECT *
-	FROM L_categoryt;
+	FROM l_categoryt;
 END$$
 DELIMITER ;
 ######################p_club_find_lcategory 프로시저 끝######################
@@ -374,7 +351,7 @@ DELIMITER $$
 CREATE PROCEDURE p_club_find_ccategory()
 BEGIN
 	SELECT *
-	FROM C_categoryt;
+	FROM c_categoryt;
 END$$
 DELIMITER ;
 ######################p_club_find_ccategory 프로시저 끝######################
@@ -389,7 +366,7 @@ CREATE PROCEDURE p_club_del_user(
 )
 BEGIN
 	DELETE
-	  FROM User_clubt
+	  FROM user_clubt
 	 WHERE club_no=v_club_no
 	   AND user_id=v_user_id;
 END$$
@@ -404,22 +381,14 @@ CREATE PROCEDURE p_club_del_club(
 	IN v_club_no INT
 )
 BEGIN
-	DECLARE exit handler FOR SQLEXCEPTION
-	BEGIN
-		ROLLBACK;
-		SIGNAL SQLSTATE '45000';
-	END;
-
-	START TRANSACTION;
 
 	DELETE
-	  FROM User_clubt
+	  FROM user_clubt
 	 WHERE club_no=v_club_no;
 	DELETE
 	  FROM clubt
 	 WHERE club_no=v_club_no;
-	 
-	 COMMIT;
+
 END$$
 DELIMITER ;
 ######################p_club_del_club 프로시저 끝######################
@@ -435,25 +404,17 @@ CREATE PROCEDURE p_club_user_release(
 )
 BEGIN
 	DECLARE c_user_id VARCHAR(20);
-	DECLARE exit handler FOR SQLEXCEPTION
-	BEGIN
-		ROLLBACK;
-		SIGNAL SQLSTATE '45000';
-	END;
 
-	START TRANSACTION;
-	
 	SELECT user_id INTO c_user_id FROM clubt WHERE club_no=v_club_no;
 	
 	
-	INSERT INTO MessageT VALUES(default,c_user_id,v_user_id,v_content,now(),0);	
+	INSERT INTO messaget VALUES(default,c_user_id,v_user_id,v_content,now(),0);	
 	
 	DELETE
-	  FROM User_clubt
+	  FROM user_clubt
 	 WHERE club_no=v_club_no
 	   AND user_id=v_user_id;
-	 
-	 COMMIT;
+
 END$$
 DELIMITER ;
 ######################p_club_user_release 프로시저 끝######################
@@ -467,7 +428,7 @@ BEGIN
 	DROP TEMPORARY TABLE IF EXISTS temp;
     CREATE TEMPORARY TABLE IF NOT EXISTS temp
 		SELECT count(*) as count,c.club_no
-		  FROM clubt AS c, User_clubt AS u
+		  FROM clubt AS c, user_clubt AS u
 		 WHERE c.club_no=u.club_no
 		 group by c.club_no
 		 order by count desc limit 0,3;
