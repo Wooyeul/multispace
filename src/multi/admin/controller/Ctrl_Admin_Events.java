@@ -49,10 +49,11 @@ public class Ctrl_Admin_Events {
 	@RequestMapping("/admin_event_add2.do")
 	public ModelAndView admin_event_add2(HttpServletRequest request) throws Exception{
 		ModelAndView mnv = new ModelAndView("redirect:/admin_event_list.do");
-
-		String savePath = "C:\\Users\\student\\git\\msspace_01\\WebContent\\thumbnail";
+		//String savePath = "C:\\Users\\student\\git\\msspace_01\\WebContent\\thumbnail";
+		String thumbnailSavePath = request.getServletContext().getRealPath("thumbnail");
+		
 		int sizeLimit = 1024*1024*15;
-		MultipartRequest mpr = new MultipartRequest(request, savePath,sizeLimit,"utf-8",new DefaultFileRenamePolicy());
+		MultipartRequest mpr = new MultipartRequest(request, thumbnailSavePath,sizeLimit,"utf-8",new DefaultFileRenamePolicy());
 				
 		EventVO vo = new EventVO();
 		
@@ -102,11 +103,10 @@ public class Ctrl_Admin_Events {
 
 	@RequestMapping("/admin_event_mod2.do")
 	public ModelAndView admin_event_mod2(HttpServletRequest request) throws Exception{
-		
-		String savePath = "C:\\Users\\student\\git\\msspace_01\\WebContent\\thumbnail";
+		String thumbnailSavePath = request.getServletContext().getRealPath("thumbnail");
+		//String savePath = "C:\\Users\\student\\git\\msspace_01\\WebContent\\thumbnail";
 		int sizeLimit = 1024*1024*15;
-		System.out.println(savePath);
-		MultipartRequest mpr = new MultipartRequest(request, savePath,sizeLimit,"utf-8",new DefaultFileRenamePolicy());
+		MultipartRequest mpr = new MultipartRequest(request, thumbnailSavePath, sizeLimit,"utf-8",new DefaultFileRenamePolicy());
 				
 		EventVO vo = new EventVO();
 

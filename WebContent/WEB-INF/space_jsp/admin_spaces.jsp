@@ -104,7 +104,6 @@ $(document).ready(function(){
 		
 		<form id="textsearch" action="admin_spaces_search.do" method="post">
 			<div class="col-lg-6">
-					<br>
 					<div class="select">
 							<div class="select1">
 								<select name="option" class="form-control">
@@ -133,7 +132,6 @@ $(document).ready(function(){
 				</div> 
 
 				<div class="col-lg-6">
-					<br>
 					<div class="select">
 							<div class="select2">
 								<select name="option2" class="form-control">
@@ -149,10 +147,9 @@ $(document).ready(function(){
 					</div>
 				</div> 
 		</form>
-
+			<br><br><br>
 			<div class="panel-body table-responsive">
-				<br> <br> <br>
-				<table
+				<table width="100%"
 					class="table table-striped table-bordered table-hover table_text_align "
 					id="dataTables-example">
 					<thead>
