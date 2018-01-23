@@ -161,7 +161,7 @@
 	DELIMITER $$
 	CREATE PROCEDURE p_admin_list_removed_users()
 	BEGIN
-		SELECT * FROM User_Del_EmailT ORDER BY writing_no DESC;
+		SELECT * FROM user_del_emailt ORDER BY writing_no DESC;
 	END$$
 	DELIMITER ;
 	-->
@@ -211,7 +211,7 @@
 	
 	<select id="admin_search_removed_user" parameterType="multi.admin.vo.Admin_searchVO" 
 		resultType="multi.admin.vo.Admin_User_Del_EmailVO">
-		SELECT * FROM User_Del_EmailT WHERE 0=0 
+		SELECT * FROM user_del_emailt WHERE 0=0 
 		<if test="start_no != null">
 			ORDER BY writing_no DESC LIMIT #{start_no},10
 		</if>
