@@ -27,7 +27,7 @@
      )
      
      BEGIN
-           INSERT INTO EventT VALUES (default, v_eve_title,v_eve_content,NOW(),v_eve_thumb_img);
+           INSERT INTO eventt VALUES (default, v_eve_title,v_eve_content,NOW(),v_eve_thumb_img);
      END$$
     DELIMITER ;
     
@@ -49,7 +49,7 @@
 	DELIMITER $$
 	CREATE PROCEDURE p_admin_event_findAll()
 	BEGIN
-		SELECT * FROM EventT ORDER BY eve_no DESC;
+		SELECT * FROM eventt ORDER BY eve_no DESC;
 	END$$
 	DELIMITER ;
 	-->
@@ -73,7 +73,7 @@
   		CREATE PROCEDURE p_admin_event_getByPK(
 			IN v_eve_no INT )
   		BEGIN
-		SELECT * FROM EventT WHERE eve_no = v_eve_no;
+		SELECT * FROM eventt WHERE eve_no = v_eve_no;
   		END$$
   		DELIMITER ;
 	 -->
@@ -100,7 +100,7 @@
 		IN v_eve_thumb_img VARCHAR(45)
 	)
 	BEGIN
-		UPDATE EventT set eve_title=v_eve_title, eve_content=v_eve_content, eve_thumb_img= v_eve_thumb_img
+		UPDATE eventt set eve_title=v_eve_title, eve_content=v_eve_content, eve_thumb_img= v_eve_thumb_img
 			WHERE eve_no = v_eve_no;
 	END$$
 	DELIMITER ;
@@ -124,7 +124,7 @@
 		IN v_eve_no INT
 	)
 	BEGIN
-		DELETE FROM EventT WHERE eve_no = v_eve_no;
+		DELETE FROM eventt WHERE eve_no = v_eve_no;
 	END$$
 	DELIMITER ;
 	-->
@@ -141,7 +141,7 @@
 	<select id="admin_search_All" parameterType="multi.admin.vo.Admin_searchVO"
 		resultType="main.vo.EventVO">
 
-	SELECT * FROM EventT WHERE 0 = 0
+	SELECT * FROM eventt WHERE 0 = 0
 	<if test="search_option == 1">
 	AND eve_title like '%${search_content}%'
 	</if>

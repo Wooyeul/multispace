@@ -9,9 +9,10 @@
 	DELIMITER $$
 	CREATE PROCEDURE p_admin_club_FindAllClubs()
 	BEGIN
-		SELECT * FROM ClubT ORDER BY create_time DESC;
+		SELECT * FROM clubt ORDER BY create_time DESC;
 	END$$
 	DELIMITER ;
+	
 	-->
  	<resultMap id="RM_p_admin_club_FindAllClubs" type="main.vo.ClubVO">
 		<result property="club_no" column="club_no" jdbcType="INTEGER" />
@@ -37,21 +38,15 @@
 	CREATE PROCEDURE p_admin_club_Remove(
 		IN v_club_no INT
 	)
-	BEGIN
-		DECLARE exit handler FOR SQLEXCEPTION
-		BEGIN
-			ROLLBACK;
-			SIGNAL SQLSTATE '45000';
-		END;
-		START TRANSACTION;
-			DELETE FROM ClubT WHERE club_no = v_club_no;
-			DELETE FROM BookingT WHERE club_no = v_club_no;
-			DELETE FROM User_ClubT WHERE club_no = v_club_no;
-			DELETE FROM Club_NoticeT WHERE club_no = v_club_no;
-			DELETE FROM Club_applyT WHERE club_no = v_club_no;
-		COMMIT;
+	BEGIN		
+		DELETE FROM clubt WHERE club_no = v_club_no;
+		DELETE FROM bookingt WHERE club_no = v_club_no;
+		DELETE FROM user_clubt WHERE club_no = v_club_no;
+		DELETE FROM club_noticet WHERE club_no = v_club_no;
+		DELETE FROM club_applyt WHERE club_no = v_club_no;
 	END$$
 	DELIMITER ;
+	
 	-->
 	<parameterMap id="PM_p_admin_club_Remove" type="main.vo.ClubVO" >
 		<parameter property="club_no" mode="IN" jdbcType="VARCHAR"/>
@@ -69,9 +64,10 @@
 		IN v_club_no INT
 	)
 	BEGIN
-		SELECT * FROM ClubT WHERE club_no = v_club_no;
+		SELECT * FROM clubt WHERE club_no = v_club_no;
 	END$$
 	DELIMITER ;
+	
 	-->
 	<parameterMap id="PM_p_admin_club_FindSpecificClub" type="main.vo.ClubVO" >
 		<parameter property="club_no" mode="IN" jdbcType="VARCHAR"/>
@@ -102,9 +98,10 @@
 		IN v_club_no INT
 	)
 	BEGIN
-		SELECT * FROM User_ClubT WHERE club_no = v_club_no;
+		SELECT * FROM user_clubt WHERE club_no = v_club_no;
 	END$$
 	DELIMITER ;
+	
 	-->
 	<parameterMap id="PM_p_admin_club_FindjoinedUsers" type="main.vo.User_clubVO" >
 		<parameter property="club_no" mode="IN" jdbcType="VARCHAR"/>
@@ -121,7 +118,7 @@
 	<select id="admin_clubs_search" parameterType="multi.admin.vo.Admin_searchVO"
 		resultType="main.vo.ClubVO">
 	
-		SELECT * FROM ClubT WHERE 0 = 0
+		SELECT * FROM clubt WHERE 0 = 0
 		<if test="search_option == 1">
 		AND club_name like '%${search_content}%'
 		</if>

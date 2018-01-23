@@ -9,7 +9,7 @@
 	DELIMITER $$
 	CREATE PROCEDURE p_admin_faq_FindAllTexts()
 	BEGIN
-		SELECT * FROM faqT ORDER BY faq_no DESC;
+		SELECT * FROM faqt ORDER BY faq_no DESC;
 	END$$
 	DELIMITER ;
 	-->
@@ -30,7 +30,7 @@
 		IN v_faq_no INT
 		)
 	BEGIN
-		SELECT * FROM FaqT WHERE faq_no = v_faq_no;
+		SELECT * FROM faqt WHERE faq_no = v_faq_no;
 	END$$
 	DELIMITER ;
 	CALL p_admin_faq_readFaq(1);
@@ -58,7 +58,7 @@
 		IN v_faq_content TEXT
 		)
 	BEGIN
-		UPDATE faqT SET faq_title = v_faq_title, faq_content = v_faq_content  WHERE faq_no = v_faq_no;
+		UPDATE faqt SET faq_title = v_faq_title, faq_content = v_faq_content  WHERE faq_no = v_faq_no;
 	END$$
 	DELIMITER ;
 	CALL p_admin_faq_modifyFaq (1,'tt','good');
@@ -82,7 +82,7 @@
 		IN v_faq_no INT
 		)
 	BEGIN
-		DELETE FROM FaqT WHERE faq_no = v_faq_no;
+		DELETE FROM faqt WHERE faq_no = v_faq_no;
 	END$$
 	DELIMITER ;
 	CALL p_admin_faq_delFaq (1);
@@ -105,7 +105,7 @@
 		IN v_faq_content TEXT
 		)
 	BEGIN
-		INSERT INTO FaqT VALUES(default,v_faq_title, v_faq_content );
+		INSERT INTO faqt VALUES(default,v_faq_title, v_faq_content );
 	END$$
 	DELIMITER ;
 	CALL p_admin_faq_addFaq ( 'test2', 'nice' );
@@ -123,7 +123,7 @@
 	<select id="admin_search_All" parameterType="multi.admin.vo.Admin_searchVO"
 		resultType="main.vo.FaqVO">
 
-	SELECT * FROM FaqT WHERE 0 = 0
+	SELECT * FROM faqt WHERE 0 = 0
 	<if test="search_option == 1">
 	AND faq_title like '%${search_content}%'
 	</if>

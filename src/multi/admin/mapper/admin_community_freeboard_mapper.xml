@@ -8,8 +8,8 @@
 <!-- ***************************자유게시판*************************** -->
 <!--  
 
-Community_BoardT
-CREATE TABLE Community_BoardT
+community_boardt
+CREATE TABLE community_boardt
 (
     `com_board_no`       INT            NOT NULL    AUTO_INCREMENT, 
     `com_board_title`    TEXT           NULL, 
@@ -21,12 +21,12 @@ CREATE TABLE Community_BoardT
     PRIMARY KEY (com_board_no)
 );
 
-insert into Community_BoardT values(default,"멀티스페이스좋아요","짱짱맨",now(),"joy",1,1);
-insert into Community_BoardT values(default,"새해에는","좋은일이생겨요",now(),"kungfu",1,1);
-insert into Community_BoardT values(default,"치킨","먹고싶다",now(),"kfc",1,1);
+insert into community_boardt values(default,"멀티스페이스좋아요","짱짱맨",now(),"joy",1,1);
+insert into community_boardt values(default,"새해에는","좋은일이생겨요",now(),"kungfu",1,1);
+insert into community_boardt values(default,"치킨","먹고싶다",now(),"kfc",1,1);
 
-Community_Board_RecomtT
-CREATE TABLE Community_Board_RecomtT
+community_board_recomtt
+CREATE TABLE community_board_recomtt
 (
     `user_id`       VARCHAR(20)    NOT NULL, 
     `com_board_no`  INT            NOT NULL, 
@@ -41,7 +41,7 @@ CREATE TABLE Community_Board_RecomtT
 	DELIMITER $$
 	CREATE PROCEDURE p_admin_comm_boardFindAllTexts()
 	BEGIN
-		SELECT * FROM Community_BoardT ORDER BY com_board_no DESC;
+		SELECT * FROM community_boardt ORDER BY com_board_no DESC;
 	END$$
 	DELIMITER ;
 	
@@ -76,10 +76,11 @@ DROP PROCEDURE IF EXISTS p_admin_comm_boardAdd;
 
 	)
 	BEGIN
-		INSERT INTO Community_BoardT VALUES(default,
+		INSERT INTO community_boardt VALUES(default,
 			v_user_id, v_com_board_title,v_com_board_content,NOW(),0,0);
 	END$$
 	DELIMITER ;
+	
 
 
 -->
@@ -106,9 +107,10 @@ DROP PROCEDURE IF EXISTS p_admin_comm_boardAdd;
 		IN v_com_board_no INT(11)
 	)
 	BEGIN
-		SELECT * FROM Community_BoardT WHERE com_board_no = v_com_board_no;
+		SELECT * FROM community_boardt WHERE com_board_no = v_com_board_no;
 	END$$
 	DELIMITER ;
+	
 -->
 	
 	<parameterMap id="PM_p_admin_comm_boardFindText" type="main.vo.Community_boardVO">
@@ -130,9 +132,10 @@ DROP PROCEDURE IF EXISTS p_admin_comm_boardAdd;
 		IN v_com_board_content TEXT
 	)
 	BEGIN
-		update Community_BoardT set com_board_content = v_com_board_content , com_board_title=v_com_board_title where com_board_no = v_com_board_no;
+		update community_boardt set com_board_content = v_com_board_content , com_board_title=v_com_board_title where com_board_no = v_com_board_no;
 	END$$
 	DELIMITER ;
+	
 -->
 
 	<parameterMap id="PM_p_admin_comm_boardMod" type="main.vo.Community_boardVO">
@@ -154,9 +157,10 @@ DROP PROCEDURE IF EXISTS p_admin_comm_boardDelByPK;
 			IN v_com_board_no INT(11)
 	)
 	BEGIN
-		DELETE FROM Community_BoardT WHERE com_board_no = v_com_board_no;
+		DELETE FROM community_boardt WHERE com_board_no = v_com_board_no;
 	END$$
 	DELIMITER ;
+	
 	-->
 	<parameterMap id="PM_p_admin_comm_boardDelByPK" type="main.vo.Community_boardVO">
 		<parameter property="com_board_no" mode="IN" jdbcType="INTEGER"/>
@@ -181,28 +185,20 @@ DROP PROCEDURE IF EXISTS p_admin_comm_boardDelByPK;
 	BEGIN
 		DECLARE v_count INT;
 		
-		DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-		BEGIN
-			ROLLBACK;
-			SIGNAL SQLSTATE '45000';
-		END;
-		
-		SELECT COUNT(*) INTO v_count FROM Community_Board_RecomtT
+		SELECT COUNT(*) INTO v_count FROM community_board_recomtt
 			WHERE user_id = v_user_id AND com_board_no = v_com_board_no;
 		IF v_count = 0 THEN
-			START TRANSACTION;
-				INSERT INTO Community_Board_RecomtT VALUES ( v_user_id, v_com_board_no );
-				UPDATE Community_BoardT SET recom_count = recom_count + 1 
+				INSERT INTO community_board_recomtt VALUES ( v_user_id, v_com_board_no );
+				UPDATE community_boardt SET recom_count = recom_count + 1 
 					WHERE com_board_no = v_com_board_no;
-				SELECT recom_count INTO v_recom FROM Community_BoardT
+				SELECT recom_count INTO v_recom FROM community_boardt
 					WHERE com_board_no = v_com_board_no; 
-			COMMIT;
 		ELSE
 			SET v_recom = -1;
 		END IF;
 	END$$
 	DELIMITER ;
-
+	
 	CALL p_admin_comm_boardIncRecomLogic('admin',17,@R);
 	SELECT @R;
 
@@ -230,9 +226,10 @@ DROP PROCEDURE IF EXISTS p_admin_comm_boardDelByPK;
 		IN v_com_board_no INT(11)
 	)
 	BEGIN
-		update Community_BoardT set view_count = view_count+1 where com_board_no=v_com_board_no;
+		update community_boardt set view_count = view_count+1 where com_board_no=v_com_board_no;
 	END$$
 	DELIMITER ;
+	
 
 
 -->   
@@ -259,10 +256,11 @@ DROP PROCEDURE IF EXISTS p_admin_comm_boardDelByPK;
 
 	)
 	BEGIN
-		INSERT INTO Community_Board_RepleT VALUES(default,
+		INSERT INTO community_board_replet VALUES(default,
 			v_user_id, v_com_board_no, v_com_board_reple_content, NOW());
 	END$$
 	DELIMITER ;
+	
 
 
  -->
@@ -288,9 +286,10 @@ DROP PROCEDURE IF EXISTS p_admin_comm_boardDelByPK;
 		IN v_com_board_reple_content TEXT
 	)
 	BEGIN
-		update Community_Board_RepleT set com_board_reple_content = v_com_board_reple_content where com_board_reple_no = v_com_board_reple_no;
+		update community_board_replet set com_board_reple_content = v_com_board_reple_content where com_board_reple_no = v_com_board_reple_no;
 	END$$
 	DELIMITER ;
+	
    -->
    <parameterMap id="PM_p_admin_comm_boardrepleMod" type="main.vo.Community_board_repleVO">
 		<parameter property="com_board_reple_no" mode="IN" jdbcType="INTEGER"/>
@@ -316,10 +315,10 @@ DROP PROCEDURE IF EXISTS p_admin_comm_boardDelByPK;
 
 	)
 	BEGIN
-		DELETE FROM Community_Board_RepleT WHERE com_board_reple_no = v_com_board_reple_no and com_board_no =  v_com_board_no;
+		DELETE FROM community_board_replet WHERE com_board_reple_no = v_com_board_reple_no and com_board_no =  v_com_board_no;
 	END$$
 	DELIMITER ;
-
+	
  -->  
    	<parameterMap id="PM_p_admin_comm_boardrepleDel" type="main.vo.Community_board_repleVO">
 		<parameter property="com_board_reple_no" mode="IN" jdbcType="INTEGER"/>
@@ -335,14 +334,13 @@ DROP PROCEDURE IF EXISTS p_admin_comm_boardDelByPK;
    
    
 <!-- 
-	프로시져 p_admin_comm_boradrepleFindAllTexts  
 	DROP PROCEDURE IF EXISTS p_admin_comm_boradrepleFindAllTexts;
 	DELIMITER $$
 	CREATE PROCEDURE p_admin_comm_boradrepleFindAllTexts(
 	IN v_com_board_no INT(11)
 	)
 	BEGIN
-		SELECT * FROM Community_Board_RepleT where com_board_no =  v_com_board_no;
+		SELECT * FROM community_board_replet where com_board_no =  v_com_board_no;
 	END$$
 	DELIMITER ;
 	
@@ -369,7 +367,7 @@ parameterMap ="PM_p_admin_comm_boradrepleFindAllTexts">
 <!-- freeboard search -->
 <select id="admin_freeboard_search" parameterType="multi.admin.vo.Admin_searchVO"
 		resultType="main.vo.Community_boardVO">
-	SELECT * FROM Community_BoardT WHERE 0 = 0
+	SELECT * FROM community_boardt WHERE 0 = 0
 	<if test="search_option == 1">
 	AND com_board_title like '%${search_content}%'
 	</if>

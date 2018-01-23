@@ -14,7 +14,7 @@
 	DELIMITER $$
 	CREATE PROCEDURE p_admin_user_findAll()
 	BEGIN
-		SELECT * FROM UserT WHERE grade = 1;
+		SELECT * FROM usert WHERE grade = 1;
 	END$$
 	DELIMITER ;
 	CALL p_admin_user_findAll();
@@ -45,7 +45,7 @@
 		IN v_user_id VARCHAR(50)
 	)
 	BEGIN
-		SELECT * FROM UserT WHERE user_id = v_user_id;
+		SELECT * FROM usert WHERE user_id = v_user_id;
 	END$$
 	DELIMITER ;
 	-->
@@ -83,12 +83,6 @@
 		IN v_mail_content TEXT
 	)
 	BEGIN
-		DECLARE exit handler FOR SQLEXCEPTION
-		BEGIN
-			ROLLBACK;
-			SIGNAL SQLSTATE '45000';
-		END;
-		START TRANSACTION;
 			INSERT INTO User_del_emailT VALUES ( default, v_user_id, v_user_name, v_email, v_subject, v_mail_content, NOW() );
 			DELETE FROM Club_BoardT WHERE user_id = v_user_id;
 			DELETE FROM BookingT WHERE user_id = v_user_id;
@@ -111,8 +105,7 @@
 			DELETE FROM ReviewT WHERE user_id = v_user_id;
 			DELETE FROM Review_RepleT WHERE user_id = v_user_id;
 			DELETE FROM BookmarkT WHERE user_id = v_user_id;
-			DELETE FROM UserT WHERE user_id = v_user_id;
-		COMMIT;
+			DELETE FROM usert WHERE user_id = v_user_id;
 	END$$
 	DELIMITER ;
 	-->
@@ -142,7 +135,7 @@
 		IN v_email VARCHAR(50)
 	)
 	BEGIN
-		UPDATE UserT SET user_name = v_user_name, phone=v_phone, 
+		UPDATE usert SET user_name = v_user_name, phone=v_phone, 
 		nickname=v_nickname, zipcode = v_zipcode, zipdetail = v_zipdetail, email = v_email WHERE user_id = v_user_id;
 	END$$
 	DELIMITER ;
@@ -189,7 +182,7 @@
 	
 	<select id="admin_search_user" parameterType="multi.admin.vo.Admin_searchVO" resultType="main.vo.UserVO">
 		
-		SELECT * FROM UserT WHERE grade=1 AND 0=0 
+		SELECT * FROM usert WHERE grade=1 AND 0=0 
 		<if test="search_option == 1">
 		AND user_name like '%${search_content}%'
 		</if>

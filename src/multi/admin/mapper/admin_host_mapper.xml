@@ -10,7 +10,7 @@
 	DELIMITER $$
 	CREATE PROCEDURE p_admin_host_findAll()
 	BEGIN
-		SELECT * FROM HostT WHERE user_id IN ( SELECT user_id FROM UserT WHERE grade='2');
+		SELECT * FROM hostt WHERE user_id IN ( SELECT user_id FROM usert WHERE grade='2');
 	END$$
 	DELIMITER ;
 	CALL p_admin_host_findAll();
@@ -32,7 +32,7 @@
 	DELIMITER $$
 	CREATE PROCEDURE p_admin_host_request_findAll()
 	BEGIN
-		SELECT * FROM HostApplyT;
+		SELECT * FROM hostapplyt;
 	END$$
 	DELIMITER ;
 	-->
@@ -57,7 +57,7 @@
 		IN v_crn VARCHAR(50)
 	)
 	BEGIN
-		SELECT * FROM HostApplyT WHERE crn = v_crn;
+		SELECT * FROM hostapplyt WHERE crn = v_crn;
 	END$$
 	DELIMITER ;
 	CALL p_admin_host_one_person_check('444-44-44444');
@@ -97,9 +97,9 @@
 			SIGNAL SQLSTATE '45000';
 		END;
 		START TRANSACTION;
-			DELETE FROM HostApplyT WHERE user_id = v_user_id AND crn = v_crn;
-			INSERT INTO HostT VALUES ( v_crn, v_account_name, v_user_id, v_host_name, v_host_account );
-			UPDATE UserT SET grade='2' WHERE user_id = v_user_id;
+			DELETE FROM hostapplyt WHERE user_id = v_user_id AND crn = v_crn;
+			INSERT INTO hostt VALUES ( v_crn, v_account_name, v_user_id, v_host_name, v_host_account );
+			UPDATE usert SET grade='2' WHERE user_id = v_user_id;
 		COMMIT;
 	END$$
 	DELIMITER ;
@@ -126,7 +126,7 @@
 		IN v_etc VARCHAR(50)
 	)
 	BEGIN
-		UPDATE HostApplyT SET etc = v_etc WHERE host_apply_no = v_host_apply_no;
+		UPDATE hostapplyt SET etc = v_etc WHERE host_apply_no = v_host_apply_no;
 	END$$
 	DELIMITER ;
 	-->
@@ -148,7 +148,7 @@
 		IN v_host_apply_no VARCHAR(50)
 	)
 	BEGIN	
-		DELETE FROM HostApplyT WHERE host_apply_no = v_host_apply_no;
+		DELETE FROM hostapplyt WHERE host_apply_no = v_host_apply_no;
 	END$$
 	DELIMITER ;
 	-->
@@ -179,8 +179,8 @@
 			SIGNAL SQLSTATE '45000';
 		END;
 		START TRANSACTION;
-			DELETE FROM HostT WHERE crn = v_crn;
-			UPDATE UserT SET grade=1 WHERE user_id = v_user_id;
+			DELETE FROM hostt WHERE crn = v_crn;
+			UPDATE usert SET grade=1 WHERE user_id = v_user_id;
 			INSERT INTO MessageT VALUES ( default, v_send_user_id, v_receive_user_id, v_msg_content, NOW(), 0 );
 		COMMIT;
 	END$$
@@ -215,8 +215,8 @@
 			SIGNAL SQLSTATE '45000';
 		END;
 		START TRANSACTION;
-			DELETE FROM HostT WHERE crn = v_crn;
-			DELETE FROM UserT WHERE user_id = v_user_id;
+			DELETE FROM hostt WHERE crn = v_crn;
+			DELETE FROM usert WHERE user_id = v_user_id;
 		COMMIT;
 	END$$
 	DELIMITER ;
@@ -243,7 +243,7 @@
 		IN v_user_id VARCHAR(50)
 	)
 	BEGIN
-		SELECT * FROM UserT WHERE user_id = v_user_id;
+		SELECT * FROM usert WHERE user_id = v_user_id;
 	END$$
 	DELIMITER ;
 	CALL p_admin_host_user_findUserInfo('seller');
@@ -272,7 +272,7 @@
 	
 	<select id="admin_search_host_user" parameterType="multi.admin.vo.Admin_searchVO" 
 		resultType="main.vo.HostVO">
-		SELECT * FROM HostT WHERE 0=0
+		SELECT * FROM hostt WHERE 0=0
 		<if test="search_option == 1">
 		AND crn like '%${search_content}%'
 		</if>
@@ -295,7 +295,7 @@
 	
 	<select id="admin_search_host_request_user" parameterType="multi.admin.vo.Admin_searchVO" 
 		resultType="main.vo.HostApplyVO">
-		SELECT * FROM HostApplyT WHERE 0=0
+		SELECT * FROM hostapplyt WHERE 0=0
 		<if test="search_option == 1">
 		AND crn like '%${search_content}%'
 		</if>

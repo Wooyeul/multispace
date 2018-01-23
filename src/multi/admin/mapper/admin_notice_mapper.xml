@@ -9,7 +9,7 @@
 	DELIMITER $$
 	CREATE PROCEDURE p_admin_notice_FindAllTexts()
 	BEGIN
-		SELECT * FROM NoticeT ORDER BY notice_no DESC;
+		SELECT * FROM noticet ORDER BY notice_no DESC;
 	END$$
 	DELIMITER ;
 	-->
@@ -30,7 +30,7 @@
 		IN v_notice_no INT
 	)
 	BEGIN
-		SELECT * FROM NoticeT WHERE notice_no = v_notice_no;
+		SELECT * FROM noticet WHERE notice_no = v_notice_no;
 	END$$
 	DELIMITER ;
 	-->
@@ -119,7 +119,7 @@
 	<select id="admin_search_All" parameterType="multi.admin.vo.Admin_searchVO"
 		resultType="main.vo.NoticeVO">
 		
-	SELECT * FROM NoticeT WHERE 0 = 0
+	SELECT * FROM noticet WHERE 0 = 0
 	<if test="search_option == 1">
 	AND notice_title like '%${search_content}%'
 	</if>

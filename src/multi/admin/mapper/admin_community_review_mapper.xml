@@ -8,7 +8,7 @@
 <!-- 후기 프로시져 p_comm_boardreviewFindAllTexts  
 
 
-CREATE TABLE ReviewT
+CREATE TABLE reviewt
 (
     `review_no`       INT             NOT NULL    AUTO_INCREMENT, 
     `space_no`        INT             NULL, 
@@ -26,7 +26,7 @@ CREATE TABLE ReviewT
 	DELIMITER $$
 	CREATE PROCEDURE p_admin_comm_boardreviewFindAllTexts()
 	BEGIN
-		SELECT * FROM ReviewT ORDER BY review_no DESC;
+		SELECT * FROM reviewt ORDER BY review_no DESC;
 	END$$
 	DELIMITER ;
 
@@ -61,7 +61,7 @@ CREATE TABLE ReviewT
 			SIGNAL SQLSTATE '45000';
 		END;
 		START TRANSACTION;
-			DELETE FROM ReviewT WHERE review_no = v_review_no AND space_no = v_space_no;
+			DELETE FROM reviewt WHERE review_no = v_review_no AND space_no = v_space_no;
 		COMMIT;
 	END$$
 	DELIMITER ;
@@ -78,7 +78,7 @@ CREATE TABLE ReviewT
 	<select id="admin_search_All" parameterType="multi.admin.vo.Admin_searchVO"
 		resultType="main.vo.ReviewVO">
 		
-	SELECT * FROM ReviewT WHERE 0 = 0
+	SELECT * FROM reviewt WHERE 0 = 0
 	<if test="search_option == 1">
 	AND review_title like '%${search_content}%'
 	</if>

@@ -18,7 +18,7 @@
 	DELIMITER $$
 	CREATE PROCEDURE p_admin_comm_qnaFindAllTexts()
 	BEGIN
-		SELECT * FROM Community_QnAT ORDER BY com_qna_no DESC;
+		SELECT * FROM community_qnat ORDER BY com_qna_no DESC;
 	END$$
 	DELIMITER ;
 	-->
@@ -33,7 +33,7 @@
 		IN v_com_qna_no INT
 	)
 	BEGIN
-		SELECT * FROM Community_QnAT WHERE com_qna_no = v_com_qna_no;
+		SELECT * FROM community_qnat WHERE com_qna_no = v_com_qna_no;
 	END$$
 	DELIMITER ;
 	-->
@@ -56,7 +56,7 @@
 		IN v_com_qna_title VARCHAR(45)
 	)
 	BEGIN
-		INSERT INTO Community_QnAT VALUES(default, v_user_id, 
+		INSERT INTO community_qnat VALUES(default, v_user_id, 
 			v_com_qna_title, v_com_qna_content, NOW(),0);
 	END$$
 	DELIMITER ;
@@ -82,7 +82,7 @@
 		IN v_com_qna_content TEXT
 	)
 	BEGIN
-		update Community_QnAT set com_qna_title=v_com_qna_title, com_qna_content=v_com_qna_content where com_qna_no=v_com_qna_no;
+		update community_qnat set com_qna_title=v_com_qna_title, com_qna_content=v_com_qna_content where com_qna_no=v_com_qna_no;
 	END$$
 	DELIMITER ;
 	-->
@@ -105,7 +105,7 @@
 		IN v_com_qna_no INT
 	)
 	BEGIN
-		DELETE FROM Community_QnAT WHERE com_qna_no = v_com_qna_no;
+		DELETE FROM community_qnat WHERE com_qna_no = v_com_qna_no;
 	END$$
 	DELIMITER ;
 	-->
@@ -126,7 +126,7 @@
 		IN v_com_qna_no INT
 	)
 	BEGIN
-		update Community_QnAT set view_count=view_count+1 where com_qna_no=v_com_qna_no;
+		update community_qnat set view_count=view_count+1 where com_qna_no=v_com_qna_no;
 	END$$
 	DELIMITER ;
 	-->
@@ -153,7 +153,7 @@
 		IN v_com_qna_reple_content TEXT
 	)
 	BEGIN
-		INSERT INTO Community_QnA_RepleT VALUES(default,v_com_qna_no, v_user_id,
+		INSERT INTO community_qna_replet VALUES(default,v_com_qna_no, v_user_id,
 			v_com_qna_reple_content, NOW(),0);
 	END$$
 	DELIMITER ;
@@ -177,7 +177,7 @@
 		IN v_com_qna_no INT
 	)
 	BEGIN
-		SELECT * FROM Community_QnA_RepleT WHERE com_qna_no = v_com_qna_no;
+		SELECT * FROM community_qna_replet WHERE com_qna_no = v_com_qna_no;
 	END$$
 	DELIMITER ;
 	-->
@@ -207,7 +207,7 @@
 		IN v_com_qna_reple_no INT
 	)
 	BEGIN
-		DELETE FROM Community_QnA_RepleT WHERE com_qna_reple_no = v_com_qna_reple_no;
+		DELETE FROM community_qna_replet WHERE com_qna_reple_no = v_com_qna_reple_no;
 	END$$
 	DELIMITER ;
 	-->
@@ -229,7 +229,7 @@
 		IN v_com_qna_reple_content TEXT
 	)
 	BEGIN
-		update Community_QnA_RepleT set com_qna_reple_content=v_com_qna_reple_content where com_qna_reple_no=v_com_qna_reple_no;
+		update community_qna_replet set com_qna_reple_content=v_com_qna_reple_content where com_qna_reple_no=v_com_qna_reple_no;
 	END$$
 	DELIMITER ;
 	-->
@@ -256,22 +256,14 @@
    BEGIN
       DECLARE v_count INT;
       
-      DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-      BEGIN
-         ROLLBACK;
-         SIGNAL SQLSTATE '45000';
-      END;
-      
-      SELECT COUNT(*) INTO v_count FROM Community_QnA_Reple_RecomT
+      SELECT COUNT(*) INTO v_count FROM community_qna_reple_recomt
          WHERE user_id = v_user_id AND com_qna_reple_no = v_com_qna_reple_no;
       IF v_count = 0 THEN
-         START TRANSACTION;
-            INSERT INTO Community_QnA_Reple_RecomT VALUES ( v_user_id, v_com_qna_reple_no );
-            UPDATE Community_QnA_RepleT SET recom_count = recom_count + 1 
+            INSERT INTO community_qna_reple_recomt VALUES ( v_user_id, v_com_qna_reple_no );
+            UPDATE community_qna_replet SET recom_count = recom_count + 1 
                WHERE com_qna_reple_no = v_com_qna_reple_no;
-            SELECT recom_count INTO v_recom FROM Community_QnA_RepleT
+            SELECT recom_count INTO v_recom FROM community_qna_replet
                WHERE com_qna_reple_no = v_com_qna_reple_no; 
-         COMMIT;
       ELSE
          SET v_recom = -1;
       END IF;
@@ -290,32 +282,22 @@
    BEGIN
       DECLARE v_count INT;
       
-      DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-      BEGIN
-         ROLLBACK;
-         SIGNAL SQLSTATE '45000';
-      END;
       
-      SELECT COUNT(*) INTO v_count FROM Community_QnA_Reple_RecomT
+      SELECT COUNT(*) INTO v_count FROM community_qna_reple_recomt
          WHERE user_id = v_user_id AND com_qna_reple_no = v_com_qna_reple_no;
 		 
       IF v_count = 0 THEN
-        START TRANSACTION;
-            INSERT INTO Community_QnA_Reple_RecomT VALUES ( v_user_id, v_com_qna_reple_no );
-            UPDATE Community_QnA_RepleT SET recom_count = recom_count + 1 
+            INSERT INTO community_qna_reple_recomt VALUES ( v_user_id, v_com_qna_reple_no );
+            UPDATE community_qna_replet SET recom_count = recom_count + 1 
                WHERE com_qna_reple_no = v_com_qna_reple_no;
-            SELECT recom_count INTO v_recom FROM Community_QnA_RepleT
+            SELECT recom_count INTO v_recom FROM community_qna_replet
                WHERE com_qna_reple_no = v_com_qna_reple_no; 
-			  
-         COMMIT;
       ELSEIF v_count = 1 THEN
-		START TRANSACTION;
-			DELETE FROM Community_QnA_Reple_RecomT where user_id=v_user_id and com_qna_reple_no=v_com_qna_reple_no;
-            UPDATE Community_QnA_RepleT SET recom_count = recom_count - 1 
+			DELETE FROM community_qna_reple_recomt where user_id=v_user_id and com_qna_reple_no=v_com_qna_reple_no;
+            UPDATE community_qna_replet SET recom_count = recom_count - 1 
                WHERE com_qna_reple_no = v_com_qna_reple_no;
-            SELECT recom_count INTO v_recom FROM Community_QnA_RepleT
-               WHERE com_qna_reple_no = v_com_qna_reple_no; 
-		COMMIT;
+            SELECT recom_count INTO v_recom FROM community_qna_replet
+               WHERE com_qna_reple_no = v_com_qna_reple_no;
       END IF;
    END$$
    DELIMITER ;
