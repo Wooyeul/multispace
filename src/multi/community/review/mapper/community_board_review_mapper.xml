@@ -46,7 +46,7 @@ CREATE TABLE ReviewT
 </resultMap>
 
 <select id="p_comm_boardreviewFindAllTexts" parameterType="hashmap" resultMap="RM_Review">
-	SELECT * FROM ReviewT WHERE 0=0 
+	SELECT * FROM reviewt WHERE 0=0 
 	<if test="start!=null">
 		ORDER BY review_no DESC LIMIT #{start},10
 	</if>
