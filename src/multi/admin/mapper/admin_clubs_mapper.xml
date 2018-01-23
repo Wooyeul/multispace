@@ -38,12 +38,11 @@
 	CREATE PROCEDURE p_admin_club_Remove(
 		IN v_club_no INT
 	)
-	BEGIN		
-		DELETE FROM clubt WHERE club_no = v_club_no;
-		DELETE FROM bookingt WHERE club_no = v_club_no;
+	BEGIN
 		DELETE FROM user_clubt WHERE club_no = v_club_no;
 		DELETE FROM club_noticet WHERE club_no = v_club_no;
 		DELETE FROM club_applyt WHERE club_no = v_club_no;
+		DELETE FROM clubt WHERE club_no = v_club_no;
 	END$$
 	DELIMITER ;
 	
