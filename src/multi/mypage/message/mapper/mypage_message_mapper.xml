@@ -62,19 +62,19 @@
 	</select>
 	
 	<insert id="mypage_message_SendMessage" parameterType="main.vo.MessageVO">
-		INSERT into Messaget values (default,#{send_user_id},#{receive_user_id},
+		INSERT into messaget values (default,#{send_user_id},#{receive_user_id},
 			#{msg_content},now(),0);
 	</insert>
    
    <select id="mypage_search_receive_msg" parameterType="multi.mypage.vo.Mypage_searchVO" resultType="main.vo.MessageVO">
-   		SELECT * from Messaget where receive_user_id = #{user_id} AND 0=0
+   		SELECT * from messaget where receive_user_id = #{user_id} AND 0=0
    		<if test="start_no !=null">
    			ORDER BY receive_user_id ASC LIMIT #{start_no},10
    		</if>
    </select>
    
    <select id="mypage_search_send_msg" parameterType="multi.mypage.vo.Mypage_searchVO" resultType="main.vo.MessageVO">
-   		SELECT * from Messaget where send_user_id = #{user_id} AND 0=0
+   		SELECT * from messaget where send_user_id = #{user_id} AND 0=0
    		<if test="start_no !=null">
    			ORDER BY send_user_id ASC LIMIT #{start_no},10
    		</if>
