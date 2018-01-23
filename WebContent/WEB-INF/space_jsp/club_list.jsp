@@ -71,8 +71,8 @@
 			$("#btn").on("click",function(){
 				parent.location.href="club_add_page.do";
 			});
-			if('${user_id}'!=''){
-				$("#btn").attr("display","inline;");
+			if('${map.user_id}'!=''){
+				$("#btn").attr("style","display:inline;");
 			}
 		});
 		function list(page){
