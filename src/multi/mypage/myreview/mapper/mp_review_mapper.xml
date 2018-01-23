@@ -26,7 +26,7 @@
 	
 	<!-- 후기찾기 페이징 -->
 	<select id="mypage_search_review" parameterType="multi.mypage.vo.Mypage_searchVO" resultType="main.vo.ReviewVO">
-		SELECT * FROM reviewT where user_id = #{user_id} AND 0=0
+		SELECT * FROM reviewt where user_id = #{user_id} AND 0=0
 		<if test="start_no !=null">
 			ORDER BY user_id ASC LIMIT #{start_no},10
 		</if>

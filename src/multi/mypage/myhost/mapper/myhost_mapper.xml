@@ -42,7 +42,7 @@
 	<!-- 판매자가 갖고있는 공간찾기 페이징 -->
 	<select id="mypage_search_host"  parameterType="multi.mypage.vo.Mypage_searchVO" resultType="main.vo.SpaceVO">
 		SELECT distinct(s.space_no),s.space_title,s.space_thumb_img,s.crn
-    	FROM spaceT s, hostT h
+    	FROM spacet s, hostt h
     	WHERE h.user_id = #{user_id} and h.crn = s.crn AND 0=0
 		<if test="start_no !=null">
 			ORDER BY h.user_id ASC LIMIT #{start_no},10
