@@ -161,6 +161,7 @@ public class CtrlQna {
 			StringBuffer sb = null;
 			try{
 				for (Community_qna_repleVO vo : rl) {
+					System.out.println(vo.getCom_qna_reple_no());
 					if (sb == null) {
 						sb = new StringBuffer();
 						sb.append("{data:[");

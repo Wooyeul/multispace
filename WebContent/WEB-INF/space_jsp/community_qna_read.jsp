@@ -93,46 +93,47 @@
 		/* 댓글 작성 버튼 클릭 시 이벤트 발생 */
 		$("#reple_submit_btn").on("click", function() {
 			$("#add_reple_modal").modal("show");
-			$("#add_reple_modal_Yes").on("click",function(){
-				var formData = $("#reple_submit").serialize();
-				$.ajax({
-					type : "POST",
-					url : "community_qna_reple_add.do",
-					data : formData,
-					success	: function(rt) {
-						$("#add_reple_modal").modal("hide");
-						if(rt=="ok"){
-							$("#basic_mobody").text("댓글이 등록 되었습니다.");
-							$("#basic_modal").modal("show");
-							$("#basic_modal").on("hidden.bs.modal",function(){
-								$("#basic_modal").modal("hide");
-								$("#com_qna_reple_content").val("");
-								find_reple();
-							});
-						}else if(rt=="no"){
-							$("#basic_mobody").text("댓글 처리가 실패 되었습니다.");
-							$("#basic_modal").modal("show");
-							$("#basic_modal").on("hidden.bs.modal",function(){
-								$("#basic_modal").modal("hide");
-								find_reple();
-							});
-						}
-				    }
-				});
-				
-				/* $("#add_reple_modal").modal("hide");
-				$("#basic_mobody").html("<h4>댓글이 등록 되었습니다.</h4>");
-				$("#basic_modal").modal("show");
-				$("#basic_modal").on("hidden.bs.modal",function(){
-					$("#reple_submit").submit();
-				}); */
-			});
-			$("#add_reple_modal_No").on("click",function(){
-				$("#add_reple_modal").modal("hide");
-			});
 		});
-		
-		
+		$("#add_reple_modal_Yes").on("click",function(){
+			reple_add();
+		});
+		$("#add_reple_modal_No").on("click",function(){
+			$("#add_reple_modal").modal("hide");
+		});
+		var reple_add = function(){
+			var formData = $("#reple_submit").serialize();
+			$.ajax({
+				type : "POST",
+				url : "community_qna_reple_add.do",
+				data : formData,
+				success	: function(rt) {
+					$("#add_reple_modal").modal("hide");
+					if(rt=="ok"){
+						$("#basic_mobody").text("댓글이 등록 되었습니다.");
+						$("#basic_modal").modal("show");
+						$("#basic_modal").on("hidden.bs.modal",function(){
+							$("#basic_modal").modal("hide");
+							$("#com_qna_reple_content").val("");
+							find_reple();
+						});
+					}else if(rt=="no"){
+						$("#basic_mobody").text("댓글 처리가 실패 되었습니다.");
+						$("#basic_modal").modal("show");
+						$("#basic_modal").on("hidden.bs.modal",function(){
+							$("#basic_modal").modal("hide");
+							find_reple();
+						});
+					}
+			    }
+			});
+			
+			/* $("#add_reple_modal").modal("hide");
+			$("#basic_mobody").html("<h4>댓글이 등록 되었습니다.</h4>");
+			$("#basic_modal").modal("show");
+			$("#basic_modal").on("hidden.bs.modal",function(){
+				$("#reple_submit").submit();
+			}); */
+		}
 		
 		$("#btnClose").on("click", function() {
 			$("#repleModal").modal("hide");

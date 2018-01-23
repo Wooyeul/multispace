@@ -53,7 +53,7 @@ import multi.space.vo.Space_searchVO;
 
 @Controller
 public class CtrlSpace {
-	
+	//Å×½ºÆ®
 	public Integer StringToInteger(String str){
 		return Integer.parseInt(str);
 	}

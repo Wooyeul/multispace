@@ -123,7 +123,7 @@ CREATE PROCEDURE p_find_host_by_space_no(
 	IN v_space_no INT(11)
 )
 BEGIN
-	SELECT * FROM hostt WHERE crn = (SELECT crn FROM SpaceT WHERE space_no=v_space_no);
+	SELECT * FROM hostt WHERE crn = (SELECT crn FROM spacet WHERE space_no=v_space_no);
 END$$
 
 DELIMITER ;
@@ -160,7 +160,7 @@ CREATE PROCEDURE p_find_s_category_by_space_no(
 	IN v_space_no INT(11)
 )
 BEGIN
-	SELECT s_category_name FROM s_categoryt WHERE s_category_no = ( SELECT s_category_no FROM SpaceT
+	SELECT s_category_name FROM s_categoryt WHERE s_category_no = ( SELECT s_category_no FROM spacet
 	WHERE space_no=v_space_no);
 END$$
 
