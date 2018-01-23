@@ -27,11 +27,11 @@
 	</insert>
 	
 	<select id="find_booking_by_space_no_and_booking_date" parameterType="main.vo.BookingVO" resultType="main.vo.BookingVO">
-		SELECT * FROM BookingT WHERE space_no=${space_no} AND booking_date='${booking_date}'
+		SELECT * FROM bookingt WHERE space_no=${space_no} AND booking_date='${booking_date}'
 	</select>
 	
 	<insert id="add_booking_club" parameterType="multi.space.vo.Booking_clubVO">
-		INSERT Booking_clubT VALUES #{booking_no},#{club_no} 	
+		INSERT booking_clubt VALUES #{booking_no},#{club_no} 	
 	</insert>
 </mapper>
 

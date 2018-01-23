@@ -16,7 +16,7 @@
 	 -->
 	 
 	<select id="find_review_by_space_no" parameterType="multi.space.vo.Review_searchVO" resultType="main.vo.ReviewVO">
-		SELECT * FROM ReviewT WHERE space_no=#{space_no}
+		SELECT * FROM reviewt WHERE space_no=#{space_no}
 		<if test="start_no != null">
 			ORDER BY review_no ASC LIMIT #{start_no},5
 		</if>

@@ -67,7 +67,7 @@
 	</select>
 	
 	<select id="search_space" parameterType="multi.space.vo.Space_searchVO" resultType="main.vo.SpaceVO">
-		SELECT * FROM SpaceT WHERE 0=0
+		SELECT * FROM spacet WHERE 0=0
 		<if test="l_category_no != null">
 			AND l_category_no=#{l_category_no}
 		</if>

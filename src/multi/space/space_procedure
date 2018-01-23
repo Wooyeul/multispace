@@ -20,7 +20,7 @@ CREATE PROCEDURE p_add_space(
 	IN v_longitude DOUBLE
 )
 BEGIN
-	INSERT INTO SpaceT VALUES(default,v_l_category_no,v_crn,v_s_category_no,v_space_title,
+	INSERT INTO spacet VALUES(default,v_l_category_no,v_crn,v_s_category_no,v_space_title,
 	v_space_content,v_space_thumb_img,v_open_time,v_close_time,v_price,v_max_people,v_min_people,v_space_call,NOW(),v_zipcode,v_latitude,v_longitude);
 END$$
 
@@ -41,7 +41,7 @@ CREATE PROCEDURE p_add_space_image(
 	IN v_image_seven VARCHAR(45)
 )
 BEGIN
-	INSERT INTO ImageT VALUES (default,v_space_no,v_image_one,v_image_two,v_image_three,
+	INSERT INTO imaget VALUES (default,v_space_no,v_image_one,v_image_two,v_image_three,
 	v_image_four,v_image_five,v_image_six,v_image_seven);
 END$$
 
@@ -56,7 +56,7 @@ DELIMITER $$
 CREATE PROCEDURE p_find_space_all(
 )
 BEGIN
-	SELECT * FROM SpaceT;
+	SELECT * FROM spacet;
 END$$
 
 DELIMITER ;
@@ -69,7 +69,7 @@ CREATE PROCEDURE p_find_space_by_pk(
 	IN v_space_no INT(11)
 )
 BEGIN
-	SELECT * FROM SpaceT WHERE space_no=v_space_no;
+	SELECT * FROM spacet WHERE space_no=v_space_no;
 END$$
 
 DELIMITER ;
@@ -82,7 +82,7 @@ CREATE PROCEDURE p_find_image_by_space_no(
 	IN v_space_no INT(11)
 )
 BEGIN
-	SELECT * FROM ImageT WHERE space_no=v_space_no;
+	SELECT * FROM imaget WHERE space_no=v_space_no;
 END$$
 
 DELIMITER ;
@@ -95,7 +95,7 @@ DELIMITER $$
 CREATE PROCEDURE p_find_space_no(
 )
 BEGIN 
-	SELECT MAX(space_no) FROM SpaceT;
+	SELECT MAX(space_no) FROM spacet;
 END$$
 
 DELIMITER ;
@@ -109,8 +109,8 @@ CREATE PROCEDURE p_find_user_club(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	SELECT * FROM ClubT WHERE club_no IN (
-	SELECT club_no FROM User_clubT WHERE user_id=v_user_id);
+	SELECT * FROM clubt WHERE club_no IN (
+	SELECT club_no FROM user_clubt WHERE user_id=v_user_id);
 END$$
 
 DELIMITER ;
@@ -123,7 +123,7 @@ CREATE PROCEDURE p_find_host_by_space_no(
 	IN v_space_no INT(11)
 )
 BEGIN
-	SELECT * FROM HostT WHERE crn = (SELECT crn FROM SpaceT WHERE space_no=v_space_no);
+	SELECT * FROM hostt WHERE crn = (SELECT crn FROM SpaceT WHERE space_no=v_space_no);
 END$$
 
 DELIMITER ;
@@ -135,7 +135,7 @@ DELIMITER $$
 CREATE PROCEDURE p_find_l_category(
 )
 BEGIN
-	SELECT * FROM l_categoryT;
+	SELECT * FROM l_categoryt;
 END$$
 
 DELIMITER ;
@@ -147,7 +147,7 @@ DELIMITER $$
 CREATE PROCEDURE p_find_s_category(
 )
 BEGIN
-	SELECT * FROM s_categoryT;
+	SELECT * FROM s_categoryt;
 END$$
 
 DELIMITER ;
@@ -160,7 +160,7 @@ CREATE PROCEDURE p_find_s_category_by_space_no(
 	IN v_space_no INT(11)
 )
 BEGIN
-	SELECT s_category_name FROM S_categoryT WHERE s_category_no = ( SELECT s_category_no FROM SpaceT
+	SELECT s_category_name FROM s_categoryt WHERE s_category_no = ( SELECT s_category_no FROM SpaceT
 	WHERE space_no=v_space_no);
 END$$
 
@@ -174,7 +174,7 @@ CREATE PROCEDURE p_find_l_category_by_space_no(
 	IN v_space_no INT(11)
 )
 BEGIN
-	SELECT l_category_name FROM L_categoryT WHERE l_category_no = ( SELECT l_category_no FROM SpaceT
+	SELECT l_category_name FROM l_categoryt WHERE l_category_no = ( SELECT l_category_no FROM spacet
 	WHERE space_no=v_space_no);
 END$$
 
@@ -190,12 +190,12 @@ BEGIN
    DROP TEMPORARY TABLE IF EXISTS temp;
    CREATE TEMPORARY TABLE IF NOT EXISTS temp
    SELECT count(*) as count,B.space_no
-   FROM BookmarkT AS B, SpaceT AS S
+   FROM bookmarkt AS B, spacet AS S
    WHERE B.space_no=S.space_no AND S.l_category_no=1
    group by B.space_no
    order by count desc limit 0,3;
    
-   SELECT * FROM SpaceT AS S,temp AS T WHERE S.space_no=T.space_no;
+   SELECT * FROM spacet AS S,temp AS T WHERE S.space_no=T.space_no;
 END$$
 
 DELIMITER ;
@@ -210,12 +210,12 @@ BEGIN
    DROP TEMPORARY TABLE IF EXISTS temp2;
    CREATE TEMPORARY TABLE IF NOT EXISTS temp2
    SELECT count(*) as count,B.space_no
-   FROM BookmarkT AS B, SpaceT AS S
+   FROM bookmarkt AS B, spacet AS S
    WHERE B.space_no=S.space_no AND S.s_category_no=3
    group by B.space_no
    order by count desc limit 0,3;
    
-   SELECT * FROM SpaceT AS S,temp2 AS T WHERE S.space_no=T.space_no;
+   SELECT * FROM spacet AS S,temp2 AS T WHERE S.space_no=T.space_no;
 END$$
 
 DELIMITER ;
@@ -228,7 +228,7 @@ CREATE PROCEDURE p_del_space_by_space_no(
 	IN v_space_no INT(11)
 )
 BEGIN
-	DELETE FROM SpaceT WHERE space_no=v_space_no;
+	DELETE FROM spacet WHERE space_no=v_space_no;
 END$$
 
 DELIMITER ;
@@ -250,7 +250,7 @@ CREATE PROCEDURE p_mod_space(
 	IN v_space_no INT(11)
 )
 BEGIN
-	UPDATE SpaceT SET space_title=v_space_title, space_content=v_space_content,open_time=v_open_time,
+	UPDATE spacet SET space_title=v_space_title, space_content=v_space_content,open_time=v_open_time,
 	close_time=v_close_time,price=v_price,min_people=v_min_people,max_people=v_max_people,l_category_no=v_l_category_no,
 	s_category_no=v_s_category_no WHERE space_no=v_space_no;
 END$$
@@ -265,7 +265,7 @@ CREATE PROCEDURE p_find_space_addr(
 	IN v_zipcode CHAR(7)
 )
 BEGIN
-	SELECT * FROM ZipcodeT WHERE zipcode=v_zipcode;
+	SELECT * FROM zipcodet WHERE zipcode=v_zipcode;
 END$$
 
 DELIMITER ;
@@ -284,7 +284,7 @@ CREATE PROCEDURE p_add_spaceQnA(
 	IN v_space_qna_title VARCHAR(45)
 )
 BEGIN
-	INSERT INTO Space_QnAT VALUES (default,v_user_id,v_space_no,v_space_qna_content,v_space_qna_title,NOW());
+	INSERT INTO space_qnat VALUES (default,v_user_id,v_space_no,v_space_qna_content,v_space_qna_title,NOW());
 END$$
 
 DELIMITER ;
@@ -297,7 +297,7 @@ CREATE PROCEDURE p_delete_spaceQnA_by_space_qna_no(
 	IN v_space_qna_no INT(11)
 )
 BEGIN	
-	DELETE FROM Space_QnAT WHERE space_qna_no=v_space_qna_no;
+	DELETE FROM space_qnat WHERE space_qna_no=v_space_qna_no;
 END$$
 
 DELIMITER ;
@@ -310,7 +310,7 @@ CREATE PROCEDURE p_find_spaceQnA_by_space_qna_no(
 	IN v_space_qna_no INT(11)
 )
 BEGIN	
-	SELECT * FROM Space_QnAT WHERE space_qna_no=v_space_qna_no;
+	SELECT * FROM space_qnat WHERE space_qna_no=v_space_qna_no;
 END$$
 
 DELIMITER ;
@@ -325,7 +325,7 @@ CREATE PROCEDURE p_mod_spaceQnA_by_space_qna_no(
 	IN v_space_qna_no INT(11)
 )
 BEGIN	
-	UPDATE Space_QnAT SET space_qna_title=v_space_qna_title, space_qna_content=v_space_qna_content WHERE space_qna_no=v_space_qna_no;
+	UPDATE space_qnat SET space_qna_title=v_space_qna_title, space_qna_content=v_space_qna_content WHERE space_qna_no=v_space_qna_no;
 END$$
 
 DELIMITER ;
@@ -351,7 +351,7 @@ CREATE PROCEDURE p_add_booking(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN	
-	INSERT INTO BookingT VALUES (default,52,v_space_no,NOW(),v_booking_date
+	INSERT INTO bookingt VALUES (default,52,v_space_no,NOW(),v_booking_date
 	,v_start_time,v_end_time,v_booking_people,v_booking_price,v_booking_user_name,
 	v_booking_phone,v_booking_email,v_booking_message,v_user_id);
 END$$
@@ -367,7 +367,7 @@ CREATE PROCEDURE p_find_booking_by_space_no_and_booking_date(
 	IN v_booking_date DATE
 )
 BEGIN	
-		SELECT * FROM BookingT WHERE space_no=v_space_no AND booking_date=v_booking_date;
+		SELECT * FROM bookingt WHERE space_no=v_space_no AND booking_date=v_booking_date;
 END$$
 
 DELIMITER ;
@@ -383,7 +383,7 @@ CREATE PROCEDURE p_add_bookmark(
 	IN v_space_no INT(11)
 )
 BEGIN
-	INSERT INTO BookmarkT VALUES (v_user_id,v_space_no);
+	INSERT INTO bookmarkt VALUES (v_user_id,v_space_no);
 END$$
 
 DELIMITER ;
@@ -397,7 +397,7 @@ CREATE PROCEDURE p_find_bookmark(
 	IN v_space_no INT(11)
 )
 BEGIN
-	SELECT * FROM BookmarkT WHERE user_id=v_user_id AND space_no=v_space_no;
+	SELECT * FROM bookmarkt WHERE user_id=v_user_id AND space_no=v_space_no;
 END$$
 
 DELIMITER ;
@@ -411,7 +411,7 @@ CREATE PROCEDURE p_del_bookmark(
 	IN v_space_no INT(11)
 )
 BEGIN
-	DELETE FROM BookmarkT WHERE user_id=v_user_id AND space_no=v_space_no;
+	DELETE FROM bookmarkt WHERE user_id=v_user_id AND space_no=v_space_no;
 END$$
 
 DELIMITER ;
@@ -426,7 +426,7 @@ CREATE PROCEDURE p_find_host_by_user_id(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	SELECT * FROM HostT WHERE user_id=v_user_id;
+	SELECT * FROM hostt WHERE user_id=v_user_id;
 END$$
 
 DELIMITER ;
@@ -445,7 +445,7 @@ CREATE PROCEDURE p_add_review(
 	IN v_review_img VARCHAR(100)
 )
 BEGIN
-	INSERT INTO ReviewT VALUES (default,v_user_id,v_space_no,v_review_title,
+	INSERT INTO reviewt VALUES (default,v_user_id,v_space_no,v_review_title,
 		v_review_content,NOW(),v_review_score,v_review_img);
 END$$
 
@@ -459,7 +459,7 @@ CREATE PROCEDURE p_del_review_by_review_no(
 	IN v_review_no INT(11)
 )
 BEGIN
-	DELETE FROM ReviewT WHERE review_no=v_review_no;
+	DELETE FROM reviewt WHERE review_no=v_review_no;
 END$$
 
 DELIMITER ;
@@ -472,7 +472,7 @@ CREATE PROCEDURE p_find_review_by_review_no(
 	IN v_review_no INT(11)
 )
 BEGIN
-	SELECT * FROM ReviewT WHERE review_no=v_review_no;
+	SELECT * FROM reviewt WHERE review_no=v_review_no;
 END$$
 
 DELIMITER ;
@@ -489,7 +489,7 @@ CREATE PROCEDURE p_add_space_QnA_Reple(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	INSERT INTO Space_qna_repleT VALUES ( default,v_space_qna_no,v_space_qna_reple_content,
+	INSERT INTO space_qna_replet VALUES ( default,v_space_qna_no,v_space_qna_reple_content,
 	NOW(),v_space_no,v_user_id);
 END$$
 
@@ -503,7 +503,7 @@ CREATE PROCEDURE p_find_space_QnA_Reple_by_space_qna_no(
 	IN v_space_qna_no INT(11)
 )
 BEGIN
-	SELECT * FROM Space_QnA_RepleT WHERE space_qna_no=v_space_qna_no;
+	SELECT * FROM space_qna_replet WHERE space_qna_no=v_space_qna_no;
 END$$
 
 DELIMITER ;
@@ -516,7 +516,7 @@ CREATE PROCEDURE p_delete_spaceQnA_ny_space_qna_no(
 	IN v_space_qna_no INT(11)
 )
 BEGIN
-	DELETE FROM Space_QnA_RepleT WHERE space_qna_no=v_space_qna_no;
+	DELETE FROM space_qna_replet WHERE space_qna_no=v_space_qna_no;
 END$$
 
 DELIMITER ;
@@ -531,7 +531,7 @@ CREATE PROCEDURE p_find_user_by_user_id(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	SELECT * FROM UserT WHERE user_id=v_user_id;
+	SELECT * FROM usert WHERE user_id=v_user_id;
 END$$
 
 DELIMITER ;
@@ -559,16 +559,16 @@ BEGIN
 	DECLARE
 		imsi INT;
 	
-	INSERT INTO BookingT VALUES(default,v_space_no,NOW(),v_booking_date,
+	INSERT INTO bookingt VALUES(default,v_space_no,NOW(),v_booking_date,
 	v_start_time,v_end_time,v_booking_people,v_booking_price,
 	v_booking_user_name,v_booking_phone,v_booking_email,
 	v_booking_message,v_user_id);
 	
-	SELECT max(booking_no) INTO imsi FROM bookingT;
+	SELECT max(booking_no) INTO imsi FROM bookingt;
 	
 	IF v_club_list = 0  THEN SELECT NOW();
 	ELSE 
-		INSERT INTO Booking_clubT VALUES (imsi,v_club_list);
+		INSERT INTO booking_clubt VALUES (imsi,v_club_list);
 	END IF;
 	
 END$$
