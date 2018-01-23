@@ -27,6 +27,7 @@
 	
 	
 	
+	
    <resultMap id="RM_qna_qnainfo" type="main.vo.Space_qnaVO">
       <result property="space_qna_no" column="space_qna_no" jdbcType="INTEGER"/>       
       <result property="space_no" column="space_no" jdbcType="INTEGER"/>
