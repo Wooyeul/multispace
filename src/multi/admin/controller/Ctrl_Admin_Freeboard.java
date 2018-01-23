@@ -1,7 +1,7 @@
 package multi.admin.controller;
 
 import java.util.List;
-
+import static main.Single.*;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +76,6 @@ public class Ctrl_Admin_Freeboard {
 		 admin_FreeboardDAO.incViewLogic(pvo);
 		 List<Community_board_repleVO> rl = admin_FreeboardDAO.findAllreple(rvo);
 		 mnv.addObject("rl",rl);
-		 
 	
 		 return mnv;
 		 

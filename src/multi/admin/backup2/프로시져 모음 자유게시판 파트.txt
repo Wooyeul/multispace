@@ -116,7 +116,7 @@
 
 	)
 	BEGIN
-		INSERT INTO community_board_recomtt VALUES(default,
+		INSERT INTO community_board_replet VALUES(default,
 			v_user_id, v_com_board_no, v_com_board_reple_content, NOW());
 	END$$
 	DELIMITER ;
@@ -131,7 +131,7 @@
 		IN v_com_board_reple_content TEXT
 	)
 	BEGIN
-		update community_board_recomtt set com_board_reple_content = v_com_board_reple_content where com_board_reple_no = v_com_board_reple_no;
+		update community_board_replet set com_board_reple_content = v_com_board_reple_content where com_board_reple_no = v_com_board_reple_no;
 	END$$
 	DELIMITER ;
 	
@@ -147,7 +147,7 @@
 
 	)
 	BEGIN
-		DELETE FROM community_board_recomtt WHERE com_board_reple_no = v_com_board_reple_no and com_board_no =  v_com_board_no;
+		DELETE FROM community_board_replet WHERE com_board_reple_no = v_com_board_reple_no and com_board_no =  v_com_board_no;
 	END$$
 	DELIMITER ;
 	
@@ -159,7 +159,8 @@
 	IN v_com_board_no INT(11)
 	)
 	BEGIN
-		SELECT * FROM community_board_recomtt where com_board_no =  v_com_board_no;
+		SELECT * FROM community_board_replet where com_board_no =  v_com_board_no;
 	END$$
 	DELIMITER ;
+	
 	
