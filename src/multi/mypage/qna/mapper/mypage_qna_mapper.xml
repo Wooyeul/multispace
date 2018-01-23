@@ -23,7 +23,7 @@
 
    
    <select id="mypage_qnaFindUserInfo" resultMap="RM_qna_userinfo">
-		SELECT * from userT where user_id = #{user_id};
+		SELECT * from usert where user_id = #{user_id};
 	</select>
 	
 	
@@ -37,7 +37,7 @@
    </resultMap>
 	
 	<select id="mypage_qna_qnaInfo" resultMap="RM_qna_qnainfo">
-		SELECT * from space_qnaT where user_id = #{user_id};
+		SELECT * from space_qnat where user_id = #{user_id};
 	</select>
 	
    <resultMap id="RM_qna_qna_repleinfo" type="main.vo.Space_qna_repleVO">
@@ -51,15 +51,15 @@
    </resultMap>
 	
 	<select id="mypage_qna_qna_repleInfo" resultMap="RM_qna_qna_repleinfo">
-		SELECT * from space_qna_repleT where space_qna_no = #{space_qna_no};
+		SELECT * from space_qna_replet where space_qna_no = #{space_qna_no};
 	</select>
 	
 	<select id="mypage_qna_byqnano" resultMap="RM_qna_qnainfo">
-		select * from space_qnaT where space_qna_no = #{space_qna_no};
+		select * from space_qnat where space_qna_no = #{space_qna_no};
 	</select>
 
    <select id="mypage_search_QnA" parameterType="multi.mypage.vo.Mypage_searchVO" resultType="main.vo.Space_qnaVO">
-   		SELECT * FROM space_qnaT where user_id = #{user_id} AND 0=0
+   		SELECT * FROM space_qnat where user_id = #{user_id} AND 0=0
    		<if test="start_no !=null">
    			ORDER BY user_id ASC LIMIT #{start_no},10
    		</if>

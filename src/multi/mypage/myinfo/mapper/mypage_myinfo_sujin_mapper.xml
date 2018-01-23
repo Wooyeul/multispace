@@ -23,7 +23,7 @@
 
    
    <select id="mypage_myinfoFindUserInfo" resultMap="RM_myinfo">
-		SELECT * from userT where user_id = #{user_id};
+		SELECT * from usert where user_id = #{user_id};
 	</select>
 	
 

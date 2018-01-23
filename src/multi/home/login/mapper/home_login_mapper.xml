@@ -26,18 +26,18 @@
 
 	
 	<select id="home_login" resultMap="RM_login">
-		SELECT * from userT where user_id = #{user_id} AND passwd =#{passwd};
+		SELECT * from usert where user_id = #{user_id} AND passwd =#{passwd};
 	</select>
 
 	<select id="home_loginFindUserInfo" resultMap="RM_login">
-		SELECT * from userT where user_id = #{user_id};
+		SELECT * from usert where user_id = #{user_id};
 	</select>
 	
 	<select id="home_loginFind_userId" resultMap="RM_login">
-		SELECT * from userT where user_name = #{user_name} AND ssn1 = #{ssn1} AND ssn2 = #{ssn2};
+		SELECT * from usert where user_name = #{user_name} AND ssn1 = #{ssn1} AND ssn2 = #{ssn2};
 	</select>
 	<select id="home_loginFind_userPasswd" resultMap="RM_login">
-		SELECT * from userT where user_name = #{user_name} AND ssn1 = #{ssn1} AND ssn2 = #{ssn2} AND user_id = #{user_id};
+		SELECT * from usert where user_name = #{user_name} AND ssn1 = #{ssn1} AND ssn2 = #{ssn2} AND user_id = #{user_id};
 	</select>
 
 </mapper>

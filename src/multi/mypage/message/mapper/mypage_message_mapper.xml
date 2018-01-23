@@ -17,19 +17,19 @@
    </resultMap>
 
    <select id="mypage_message_findReceiveMessage" resultMap="RM_message">
-		SELECT * from MessageT where receive_user_id = #{user_id};
+		SELECT * from Messaget where receive_user_id = #{user_id};
 	</select>
 
    <select id="mypage_message_readReceiveMessage" resultMap="RM_message">
-		SELECT * from MessageT where msg_no = #{msg_no};
+		SELECT * from Messaget where msg_no = #{msg_no};
 	</select>
 
    <select id="mypage_message_findSendMessage" resultMap="RM_message">
-		SELECT * from MessageT where send_user_id = #{user_id};
+		SELECT * from Messaget where send_user_id = #{user_id};
 	</select>
 	
    <select id="mypage_message_readSendMessage" resultMap="RM_message">
-		SELECT * from MessageT where msg_no = #{msg_no};
+		SELECT * from Messaget where msg_no = #{msg_no};
 	</select>
 
 
@@ -54,34 +54,34 @@
    
   
    <select id="mypage_message_findUserClub" resultMap="RM_club_findAll">
-		SELECT * from clubT c , user_clubT ut where c.club_no = ut.club_no AND ut.user_id = #{user_id};
+		SELECT * from clubt c , user_clubt ut where c.club_no = ut.club_no AND ut.user_id = #{user_id};
 	</select>
 	
    <select id="mypage_message_findUserClubMember" resultMap="RM_userclub">
-		SELECT * from User_clubT where club_no = #{club_no};
+		SELECT * from User_clubt where club_no = #{club_no};
 	</select>
 	
 	<insert id="mypage_message_SendMessage" parameterType="main.vo.MessageVO">
-		INSERT into MessageT values (default,#{send_user_id},#{receive_user_id},
+		INSERT into Messaget values (default,#{send_user_id},#{receive_user_id},
 			#{msg_content},now(),0);
 	</insert>
    
    <select id="mypage_search_receive_msg" parameterType="multi.mypage.vo.Mypage_searchVO" resultType="main.vo.MessageVO">
-   		SELECT * from MessageT where receive_user_id = #{user_id} AND 0=0
+   		SELECT * from Messaget where receive_user_id = #{user_id} AND 0=0
    		<if test="start_no !=null">
    			ORDER BY receive_user_id ASC LIMIT #{start_no},10
    		</if>
    </select>
    
    <select id="mypage_search_send_msg" parameterType="multi.mypage.vo.Mypage_searchVO" resultType="main.vo.MessageVO">
-   		SELECT * from MessageT where send_user_id = #{user_id} AND 0=0
+   		SELECT * from Messaget where send_user_id = #{user_id} AND 0=0
    		<if test="start_no !=null">
    			ORDER BY send_user_id ASC LIMIT #{start_no},10
    		</if>
    </select>
    
    <delete id="mypage_del_msg" parameterType="java.lang.String">
-   		DELETE FROM messageT where msg_no = #{msg_no}
+   		DELETE FROM messaget where msg_no = #{msg_no}
    </delete>
    
    

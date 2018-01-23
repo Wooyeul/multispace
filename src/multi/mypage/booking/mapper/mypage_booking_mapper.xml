@@ -26,7 +26,7 @@
    </resultMap>
 
 	 <select id="mypage_bookingInfo" resultMap="RM_mybookinginfo">
-		SELECT * from bookingT where user_id = #{user_id};
+		SELECT * from bookingt where user_id = #{user_id};
 	</select>
 
 	<resultMap id="RM_booking_userinfo" type="main.vo.UserVO">
@@ -45,11 +45,11 @@
 
    
    <select id="mypage_bookingFindUserInfo" resultMap="RM_booking_userinfo">
-		SELECT * from userT where user_id = #{user_id};
+		SELECT * from usert where user_id = #{user_id};
 	</select>
 	
 	<select id="mypage_search_booking" parameterType="multi.mypage.vo.Mypage_searchVO" resultMap="RM_mybookinginfo">
-		SELECT * FROM bookingT WHERE user_id = #{user_id}
+		SELECT * FROM bookingt WHERE user_id = #{user_id}
 		<if test="start_no != null">
 			ORDER BY user_id ASC LIMIT #{start_no},10
 		</if>

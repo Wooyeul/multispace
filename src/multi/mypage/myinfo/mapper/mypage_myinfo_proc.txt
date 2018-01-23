@@ -6,6 +6,6 @@ CREATE PROCEDURE p_mypage_myinfo_find_user(
 	IN v_user_id VARCHAR(20)
 )
 BEGIN
-	SELECT * from userT where user_id = v_user_id;
+	SELECT * from usert where user_id = v_user_id;
 END$$
 DELIMITER ;
