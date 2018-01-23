@@ -17,19 +17,19 @@
    </resultMap>
 
    <select id="mypage_message_findReceiveMessage" resultMap="RM_message">
-		SELECT * from Messaget where receive_user_id = #{user_id};
+		SELECT * from messaget where receive_user_id = #{user_id};
 	</select>
 
    <select id="mypage_message_readReceiveMessage" resultMap="RM_message">
-		SELECT * from Messaget where msg_no = #{msg_no};
+		SELECT * from messaget where msg_no = #{msg_no};
 	</select>
 
    <select id="mypage_message_findSendMessage" resultMap="RM_message">
-		SELECT * from Messaget where send_user_id = #{user_id};
+		SELECT * from messaget where send_user_id = #{user_id};
 	</select>
 	
    <select id="mypage_message_readSendMessage" resultMap="RM_message">
-		SELECT * from Messaget where msg_no = #{msg_no};
+		SELECT * from messaget where msg_no = #{msg_no};
 	</select>
 
 
@@ -58,7 +58,7 @@
 	</select>
 	
    <select id="mypage_message_findUserClubMember" resultMap="RM_userclub">
-		SELECT * from User_clubt where club_no = #{club_no};
+		SELECT * from user_clubt where club_no = #{club_no};
 	</select>
 	
 	<insert id="mypage_message_SendMessage" parameterType="main.vo.MessageVO">
