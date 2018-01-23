@@ -287,8 +287,8 @@
 	 		if(rt!=''){
 			 	var list = window.eval("("+rt+")");
 			 	var html = "";
-			 	for( var i = 0 ; i < list.data.length ; i++ ){
 			 		html +="<table class='"+"table-hover'"+">";
+			 	for( var i = 0 ; i < list.data.length ; i++ ){
 			 		html += "<tr><td width="+"150"+"><h4>"+list.data[i].user_id+"</h4></td>";
 			 		html += "<td width="+"1000"+"><span id='rb_"+list.data[i].com_qna_reple_no+"'><h4>"+list.data[i].com_qna_reple_content+"</h4></span>";
 			 		html += "<td width="+"220"+"><h5>"+list.data[i].the_time+"</h5></td>";
@@ -303,8 +303,8 @@
 			 			html += " <td width="+"50"+"><div></div></td>";
 			 		}
 					html +="</tr>";
-					html +="</table>";
 			 	}//end for
+					html +="</table>";
                 $('#reple_tr').html(html);
 		 	}else{
 		 		$('#reple_tr').html("");

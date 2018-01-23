@@ -126,33 +126,28 @@
    BEGIN
       DECLARE v_count INT;
       
-      DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-      BEGIN
-         ROLLBACK;
-         SIGNAL SQLSTATE '45000';
-      END;
-      
+
       SELECT COUNT(*) INTO v_count FROM community_qna_reple_recomt
          WHERE user_id = v_user_id AND com_qna_reple_no = v_com_qna_reple_no;
 		 
       IF v_count = 0 THEN
-        START TRANSACTION;
+        
             INSERT INTO community_qna_reple_recomt VALUES ( v_user_id, v_com_qna_reple_no );
             UPDATE community_qna_replet SET recom_count = recom_count + 1 
                WHERE com_qna_reple_no = v_com_qna_reple_no;
             SELECT recom_count INTO v_recom FROM community_qna_replet
                WHERE com_qna_reple_no = v_com_qna_reple_no; 
 			  
-         COMMIT;
+        
       ELSEIF v_count = 1 THEN
-		START TRANSACTION;
+		
 			DELETE FROM community_qna_reple_recomt where user_id=v_user_id and com_qna_reple_no=v_com_qna_reple_no;
             UPDATE community_qna_replet SET recom_count = recom_count - 1 
                WHERE com_qna_reple_no = v_com_qna_reple_no;
             SELECT recom_count INTO v_recom FROM community_qna_replet
                WHERE com_qna_reple_no = v_com_qna_reple_no;
              
-		COMMIT;
+		
       END IF;
    END$$
    DELIMITER ;
