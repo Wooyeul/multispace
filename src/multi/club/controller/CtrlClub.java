@@ -74,6 +74,7 @@ public class CtrlClub {
 		map.put("vo", vo); // vo ¿˙¿Â
 		map.put("pz", pz);
 		map.put("svo", svo);
+		map.put("user_id", user_id);
 		mnv.addObject("map", map);
 		
 		return mnv;
@@ -107,7 +108,8 @@ public class CtrlClub {
 	@ResponseBody
 	public String club_add_submit(HttpServletRequest request) throws Exception {
 		try{
-			String savePath = "C:\\Users\\student\\git\\msspace_01\\WebContent\\club_img";
+			//String savePath = "C:\\Users\\student\\git\\msspace_01\\WebContent\\club_img";
+			String savePath = request.getServletContext().getRealPath("club_img");
 		    int sizeLimit = 1024*1024*15;
 		    MultipartRequest mpr = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
 		    ClubVO pvo = new ClubVO();	      

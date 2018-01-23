@@ -606,7 +606,8 @@ public class CtrlSpace {
 	//후기 추가
 	@RequestMapping("/review_add2.do")
 	public String add_review2(HttpServletRequest request) throws Exception{
-		String savePath = "C:\\Users\\student\\git\\msspace_01\\WebContent\\review_img";
+		String savePath = request.getServletContext().getRealPath("review_img");
+		//String savePath = "C:\\Users\\student\\git\\msspace_01\\WebContent\\review_img";
 		int sizeLimit = 1024*1024*15;
 		MultipartRequest mpr = new MultipartRequest(request, savePath,sizeLimit,"utf-8",new DefaultFileRenamePolicy());
 		

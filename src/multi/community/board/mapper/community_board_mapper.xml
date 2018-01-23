@@ -377,7 +377,7 @@ parameterMap ="PM_p_comm_boradrepleFindAllTexts">
 
 <!-- boradSearch -->
 <select id="comm_boradSearch" parameterType="multi.community.board.vo.Community_board_searchVO" resultType="main.vo.Community_boardVO">
-	SELECT * FROM Community_BoardT WHERE 0 = 0
+	SELECT * FROM community_boardt WHERE 0 = 0
 	<if test="commserch_option ==1">
 		and com_board_title like '%${commserch_content}%'
 	</if>
