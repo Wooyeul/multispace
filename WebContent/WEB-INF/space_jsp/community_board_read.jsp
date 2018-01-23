@@ -269,8 +269,8 @@ $(document).ready(function() {
 			 	if(rt!=''){
 				 	var list = window.eval("("+rt+")");
 				 	var html = "";
+			 		html +="<table class='"+"table-hover'"+">";
 				 	for( var i = 0 ; i < list.data.length ; i++ ){
-				 		html +="<table class='"+"table-hover'"+">";
 				 		html += "<tr><td width="+"150"+"><h4>"+list.data[i].user_id+"</h4></td>";
 				 		html += "<td width="+"1000"+"><span id='rb_"+list.data[i].com_board_reple_no+"'><h4>"+list.data[i].com_board_reple_content+"</h4></span>";
 				 		html += "<td width="+"250"+"><h5>"+list.data[i].the_time+"</h5></td>";
@@ -279,8 +279,8 @@ $(document).ready(function() {
 					 		html += " <td width="+"50"+"><input type='button' class='delRe btn btn-danger btn-xs' value='삭제' aa='"+list.data[i].com_board_reple_no+"' bb='"+list.data[i].com_board_no+"'/></td>";	
 						}
 						html +="</tr>";
-						html +="</table>";
 				 	}//end for
+					html +="</table>";
 	                $('#reple_tr').html(html);
 			 	}else{
 			 		$('#reple_tr').html("");
