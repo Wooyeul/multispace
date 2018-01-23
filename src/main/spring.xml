@@ -11,9 +11,9 @@
 
    <bean id="ds2" class="org.apache.commons.dbcp2.BasicDataSource">
       <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-      <property name="username" value="root"></property>
-      <property name="password" value="1111"></property>
-      <property name="url" value="jdbc:mysql://70.12.113.236/space_multi"></property>
+      <property name="username" value="nightswan0school"></property>
+      <property name="password" value="multi@3429"></property>
+      <property name="url" value="jdbc:mysql://116.126.143.83:3306/nightswan0school?noAccessToProcedureBodies=true"></property>
    </bean>
 
    <bean id="factory" class="org.mybatis.spring.SqlSessionFactoryBean">
