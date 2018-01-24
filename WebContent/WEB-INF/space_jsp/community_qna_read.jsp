@@ -35,48 +35,6 @@
 	
 	<!-- Custom Fonts -->
 	<link href="./Resouces_admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-	<style type="text/css">
-
-.paginationdiv {
-	text-align: right;
-}
-
-.comm_qna_read {
-	margin-left: 10px;
-	margin-right: 10px;
-}
-
-.replecontent_qna {
-	width:98%;
-	margin-left: 20px;
-	float: left;
-}
-
-.replecontent_qna .repsumbtn {
-	width: 100px;
-	float: left;
-}
-
-.replecontent_qna .replesumtext {
-	float: left;
-	width: 800px;
-}
-
-
-
-.replecontent_qna .btnclass_mod {
-	width: 300px;
-	float: right;
-}
-
-.replecontent_qna .btnclass1, .replecontent_qna .btnclass2, .replecontent_qna .btnclass3
-	{
-	width: 100px;
-	float: left;
-}
-
-</style>
 	
 	<script>
 

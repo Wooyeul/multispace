@@ -18,50 +18,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./common.js"></script>
-	<style type="text/css">
-
-		.comm_qna_list_wrapper .commask{
-			margin-top:5px;
-			text-align: center;
-			float:left;
-		}
-		.comm_qna_list_table th, .comm_qna_list_table td {
-			text-align: center;
-		}
-		.comm_qna_list_wrapper .selectdiv1{
-			vertical-align : middle;
-			width: 1000px;
-			float: left;
-		}
-		
-		.comm_qna_list_wrapper .selectdiv2{
-			margin-top:5px;
-			width: 150px;
-			float: left;
-		}
-		
-		.comm_qna_list_wrapper .selectdiv3 {
-		 	width: 400px;
-			padding : 5px;
-			float: left;
-		}
-		.comm_qna_list_wrapper .selectdiv4 {
-			padding : 5px;
-			float: left;
-		}
-		.comm_qna_list_wrapper .selectdiv5 {
-			width: 300px;
-			margin-top:5px;
-			float: left;
-		}
-		.comm_qna_list_wrapper .selecdiv0 {
-			width: 600px;
-			margin:0 auto;
-		}
-		.comm_qna_list_con {
-			text-align:center;
-		}
-	</style>
+	
 	<script>
 	  $(document).ready(function(){
 		  
